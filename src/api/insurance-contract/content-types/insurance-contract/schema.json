@@ -1,0 +1,14 @@
+{
+  "kind": "collectionType",
+  "collectionName": "insurance_contracts",
+  "info": {
+    "singularName": "insurance-contract",
+    "pluralName": "insurance-contracts",
+    "displayName": "insuranceContract"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {}
+}

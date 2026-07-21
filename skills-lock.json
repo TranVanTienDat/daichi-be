@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "strapi-v5-expert": {
+      "source": "moteodimassi/strapi-v5-expert",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "ac06526458db74ffa6437fe3100e329f13105372c70e89ec8faff49ecd4e43b9"
+    }
+  }
+}
