@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tasks",
+  "info": {
+    "singularName": "task",
+    "pluralName": "tasks",
+    "displayName": "Task",
+    "description": "Tasks assigned to staff, optionally linked to a customer or contract"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["TODO", "IN_PROGRESS", "REVIEW", "DONE"],
+      "required": true,
+      "default": "TODO"
+    },
+    "priority": {
+      "type": "enumeration",
+      "enum": ["LOW", "MEDIUM", "HIGH", "URGENT"],
+      "required": true,
+      "default": "MEDIUM"
+    },
+    "assigneeId": {
+      "type": "string",
+      "required": true
+    },
+    "customerId": {
+      "type": "string"
+    },
+    "contractId": {
+      "type": "string"
+    },
+    "dueDate": {
+      "type": "datetime",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "policy_adjustment_requests",
+  "info": {
+    "singularName": "policy-adjustment-request",
+    "pluralName": "policy-adjustment-requests",
+    "displayName": "Policy Adjustment Request",
+    "description": "Requests for policy adjustments or changes"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "policyholder_name": {
+      "type": "string",
+      "required": true
+    },
+    "advisor_info": {
+      "type": "text"
+    },
+    "request_type": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "required": true,
+      "default": "PENDING",
+      "enum": [
+        "PENDING",
+        "IN_PROGRESS",
+        "WAITING_SUPPLEMENT",
+        "COMPLETED",
+        "REJECTED"
+      ]
+    },
+    "received_date": {
+      "type": "date",
+      "required": true
+    },
+    "execution_date": {
+      "type": "date"
+    },
+    "supplement_deadline": {
+      "type": "date"
+    },
+    "receiving_office": {
+      "type": "string"
+    },
+    "additional_info_notes": {
+      "type": "text"
+    },
+    "assigned_staff_id": {
+      "type": "string"
+    },
+    "assigned_at": {
+      "type": "datetime"
+    },
+    "insurance_contract": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::insurance-contract.insurance-contract",
+      "inversedBy": "policy_adjustment_requests"
+    }
+  }
+}

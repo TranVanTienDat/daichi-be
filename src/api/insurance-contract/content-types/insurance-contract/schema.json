@@ -4,11 +4,112 @@
   "info": {
     "singularName": "insurance-contract",
     "pluralName": "insurance-contracts",
-    "displayName": "insuranceContract"
+    "displayName": "Insurance Contract",
+    "description": "Main insurance contract information including fee details"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "contract_number": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "insured_person_name": {
+      "type": "string",
+      "required": true
+    },
+    "contact_address": {
+      "type": "string",
+      "required": true
+    },
+    "sum_insured": {
+      "type": "decimal",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "required": true,
+      "default": "PENDING",
+      "enum": [
+        "ACTIVE",
+        "CANCELLED",
+        "EXPIRED",
+        "PENDING"
+      ]
+    },
+    "effective_date": {
+      "type": "date",
+      "required": true
+    },
+    "maturity_date": {
+      "type": "date"
+    },
+    "expiration_date": {
+      "type": "date"
+    },
+    "payment_frequency": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "ANNUAL",
+        "SEMI_ANNUAL",
+        "QUARTERLY",
+        "MONTHLY"
+      ]
+    },
+    "grace_period_end_date": {
+      "type": "date"
+    },
+    "assignment_type": {
+      "type": "string"
+    },
+    "assignment_date": {
+      "type": "date"
+    },
+    "estimated_periodic_premium": {
+      "type": "decimal"
+    },
+    "periodic_or_base_premium": {
+      "type": "decimal"
+    },
+    "total_paid_premium": {
+      "type": "decimal"
+    },
+    "base_premium": {
+      "type": "decimal"
+    },
+    "topup_premium": {
+      "type": "decimal"
+    },
+    "advance_premium_next_term": {
+      "type": "decimal"
+    },
+    "unpaid_past_base_premium": {
+      "type": "decimal"
+    },
+    "pending_suspense_premium": {
+      "type": "decimal"
+    },
+    "customer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::customer.customer",
+      "inversedBy": "insurance_contracts"
+    },
+    "policy_adjustment_requests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::policy-adjustment-request.policy-adjustment-request",
+      "mappedBy": "insurance_contract"
+    },
+    "contract_riders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::contract-rider.contract-rider",
+      "mappedBy": "insurance_contract"
+    }
+  }
 }

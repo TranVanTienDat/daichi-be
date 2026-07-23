@@ -1,0 +1,76 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contract_riders",
+  "info": {
+    "singularName": "contract-rider",
+    "pluralName": "contract-riders",
+    "displayName": "Contract Rider",
+    "description": "Rider products attached to an insurance contract"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "product_name": {
+      "type": "string",
+      "required": true
+    },
+    "product_tag": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Chính",
+        "Bổ sung"
+      ]
+    },
+    "insured_person_name": {
+      "type": "string",
+      "required": true
+    },
+    "insured_person_dob": {
+      "type": "date"
+    },
+    "insured_person_gender": {
+      "type": "enumeration",
+      "enum": [
+        "male",
+        "female",
+        "other"
+      ]
+    },
+    "sum_insured": {
+      "type": "decimal",
+      "required": true
+    },
+    "periodic_premium": {
+      "type": "decimal",
+      "required": true
+    },
+    "effective_date": {
+      "type": "date"
+    },
+    "premium_due_date": {
+      "type": "date"
+    },
+    "coverage_end_date": {
+      "type": "date"
+    },
+    "status": {
+      "type": "enumeration",
+      "required": true,
+      "default": "ACTIVE",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE",
+        "CANCELLED"
+      ]
+    },
+    "insurance_contract": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::insurance-contract.insurance-contract",
+      "inversedBy": "contract_riders"
+    }
+  }
+}

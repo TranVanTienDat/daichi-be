@@ -468,6 +468,55 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiContractRiderContractRider
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'contract_riders';
+  info: {
+    description: 'Rider products attached to an insurance contract';
+    displayName: 'Contract Rider';
+    pluralName: 'contract-riders';
+    singularName: 'contract-rider';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    coverage_end_date: Schema.Attribute.Date;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    effective_date: Schema.Attribute.Date;
+    insurance_contract: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::insurance-contract.insurance-contract'
+    >;
+    insured_person_dob: Schema.Attribute.Date;
+    insured_person_gender: Schema.Attribute.Enumeration<
+      ['male', 'female', 'other']
+    >;
+    insured_person_name: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contract-rider.contract-rider'
+    > &
+      Schema.Attribute.Private;
+    periodic_premium: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    premium_due_date: Schema.Attribute.Date;
+    product_name: Schema.Attribute.String & Schema.Attribute.Required;
+    product_tag: Schema.Attribute.Enumeration<['Ch\u00EDnh', 'B\u1ED5 sung']> &
+      Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<['ACTIVE', 'INACTIVE', 'CANCELLED']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'ACTIVE'>;
+    sum_insured: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
   collectionName: 'customers';
   info: {
@@ -504,6 +553,10 @@ export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
     homePhone: Schema.Attribute.String;
+    insurance_contracts: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::insurance-contract.insurance-contract'
+    >;
     insuredContractsCount: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
@@ -555,24 +608,152 @@ export interface ApiInsuranceContractInsuranceContract
   extends Struct.CollectionTypeSchema {
   collectionName: 'insurance_contracts';
   info: {
-    displayName: 'insuranceContract';
+    description: 'Main insurance contract information including fee details';
+    displayName: 'Insurance Contract';
     pluralName: 'insurance-contracts';
     singularName: 'insurance-contract';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
+    advance_premium_next_term: Schema.Attribute.Decimal;
+    assignment_date: Schema.Attribute.Date;
+    assignment_type: Schema.Attribute.String;
+    base_premium: Schema.Attribute.Decimal;
+    contact_address: Schema.Attribute.String & Schema.Attribute.Required;
+    contract_number: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    contract_riders: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contract-rider.contract-rider'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    customer: Schema.Attribute.Relation<'manyToOne', 'api::customer.customer'>;
+    effective_date: Schema.Attribute.Date & Schema.Attribute.Required;
+    estimated_periodic_premium: Schema.Attribute.Decimal;
+    expiration_date: Schema.Attribute.Date;
+    grace_period_end_date: Schema.Attribute.Date;
+    insured_person_name: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::insurance-contract.insurance-contract'
     > &
       Schema.Attribute.Private;
+    maturity_date: Schema.Attribute.Date;
+    payment_frequency: Schema.Attribute.Enumeration<
+      ['ANNUAL', 'SEMI_ANNUAL', 'QUARTERLY', 'MONTHLY']
+    > &
+      Schema.Attribute.Required;
+    pending_suspense_premium: Schema.Attribute.Decimal;
+    periodic_or_base_premium: Schema.Attribute.Decimal;
+    policy_adjustment_requests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::policy-adjustment-request.policy-adjustment-request'
+    >;
     publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      ['ACTIVE', 'CANCELLED', 'EXPIRED', 'PENDING']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'PENDING'>;
+    sum_insured: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    topup_premium: Schema.Attribute.Decimal;
+    total_paid_premium: Schema.Attribute.Decimal;
+    unpaid_past_base_premium: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPolicyAdjustmentRequestPolicyAdjustmentRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'policy_adjustment_requests';
+  info: {
+    description: 'Requests for policy adjustments or changes';
+    displayName: 'Policy Adjustment Request';
+    pluralName: 'policy-adjustment-requests';
+    singularName: 'policy-adjustment-request';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    additional_info_notes: Schema.Attribute.Text;
+    advisor_info: Schema.Attribute.Text;
+    assigned_at: Schema.Attribute.DateTime;
+    assigned_staff_id: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    execution_date: Schema.Attribute.Date;
+    insurance_contract: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::insurance-contract.insurance-contract'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::policy-adjustment-request.policy-adjustment-request'
+    > &
+      Schema.Attribute.Private;
+    policyholder_name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    received_date: Schema.Attribute.Date & Schema.Attribute.Required;
+    receiving_office: Schema.Attribute.String;
+    request_type: Schema.Attribute.String & Schema.Attribute.Required;
+    status: Schema.Attribute.Enumeration<
+      ['PENDING', 'IN_PROGRESS', 'WAITING_SUPPLEMENT', 'COMPLETED', 'REJECTED']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'PENDING'>;
+    supplement_deadline: Schema.Attribute.Date;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTaskTask extends Struct.CollectionTypeSchema {
+  collectionName: 'tasks';
+  info: {
+    description: 'Tasks assigned to staff, optionally linked to a customer or contract';
+    displayName: 'Task';
+    pluralName: 'tasks';
+    singularName: 'task';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    assigneeId: Schema.Attribute.String & Schema.Attribute.Required;
+    contractId: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    customerId: Schema.Attribute.String;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    dueDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::task.task'> &
+      Schema.Attribute.Private;
+    priority: Schema.Attribute.Enumeration<
+      ['LOW', 'MEDIUM', 'HIGH', 'URGENT']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'MEDIUM'>;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      ['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'TODO'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1093,8 +1274,11 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
+      'api::contract-rider.contract-rider': ApiContractRiderContractRider;
       'api::customer.customer': ApiCustomerCustomer;
       'api::insurance-contract.insurance-contract': ApiInsuranceContractInsuranceContract;
+      'api::policy-adjustment-request.policy-adjustment-request': ApiPolicyAdjustmentRequestPolicyAdjustmentRequest;
+      'api::task.task': ApiTaskTask;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

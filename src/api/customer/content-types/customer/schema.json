@@ -23,20 +23,34 @@
     },
     "customerTier": {
       "type": "enumeration",
-      "enum": ["silver", "gold", "platinum", "diamond"],
       "required": true,
-      "default": "silver"
+      "default": "silver",
+      "enum": [
+        "silver",
+        "gold",
+        "platinum",
+        "diamond"
+      ]
     },
     "gender": {
       "type": "enumeration",
-      "enum": ["male", "female", "other"]
+      "enum": [
+        "male",
+        "female",
+        "other"
+      ]
     },
     "dateOfBirth": {
       "type": "date"
     },
     "maritalStatus": {
       "type": "enumeration",
-      "enum": ["single", "married", "divorced", "widowed"]
+      "enum": [
+        "single",
+        "married",
+        "divorced",
+        "widowed"
+      ]
     },
     "mobilePhone": {
       "type": "string"
@@ -90,6 +104,12 @@
       "required": true,
       "default": 0,
       "min": 0
+    },
+    "insurance_contracts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::insurance-contract.insurance-contract",
+      "mappedBy": "customer"
     }
   }
 }
