@@ -1,0 +1,13 @@
+name: Daily render ping
+
+on:
+  schedule:
+    - cron: "*/10 0-18 * * *" # Mỗi 10 phút, từ 00:00 đến 18:59 UTC = 7h sáng đến ~2h đêm VN
+  workflow_dispatch:
+
+jobs:
+  curl-website:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run cURL on Website
+        run: curl -I https://daichi-dev.onrender.com
