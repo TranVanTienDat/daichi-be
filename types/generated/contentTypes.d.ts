@@ -471,24 +471,80 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
 export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
   collectionName: 'customers';
   info: {
-    displayName: 'customer';
+    description: 'Customer profile information';
+    displayName: 'Customer';
     pluralName: 'customers';
     singularName: 'customer';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
+    address1: Schema.Attribute.String & Schema.Attribute.Required;
+    address2: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    customerCode: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    customerTier: Schema.Attribute.Enumeration<
+      ['silver', 'gold', 'platinum', 'diamond']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'silver'>;
+    dateOfBirth: Schema.Attribute.Date;
+    email: Schema.Attribute.Email;
+    fullName: Schema.Attribute.String & Schema.Attribute.Required;
+    gender: Schema.Attribute.Enumeration<['male', 'female', 'other']>;
+    hasRegisteredEkyc: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    hasUsedDConnect: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    homePhone: Schema.Attribute.String;
+    insuredContractsCount: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    lastDConnectLoginAt: Schema.Attribute.DateTime;
+    lastEkycRegisteredAt: Schema.Attribute.DateTime;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::customer.customer'
     > &
       Schema.Attribute.Private;
+    maritalStatus: Schema.Attribute.Enumeration<
+      ['single', 'married', 'divorced', 'widowed']
+    >;
+    mobilePhone: Schema.Attribute.String;
+    officePhone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    purchasedContractsCount: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    rewardPoints: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

@@ -4,11 +4,92 @@
   "info": {
     "singularName": "customer",
     "pluralName": "customers",
-    "displayName": "customer"
+    "displayName": "Customer",
+    "description": "Customer profile information"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "customerCode": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "fullName": {
+      "type": "string",
+      "required": true
+    },
+    "customerTier": {
+      "type": "enumeration",
+      "enum": ["silver", "gold", "platinum", "diamond"],
+      "required": true,
+      "default": "silver"
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": ["male", "female", "other"]
+    },
+    "dateOfBirth": {
+      "type": "date"
+    },
+    "maritalStatus": {
+      "type": "enumeration",
+      "enum": ["single", "married", "divorced", "widowed"]
+    },
+    "mobilePhone": {
+      "type": "string"
+    },
+    "homePhone": {
+      "type": "string"
+    },
+    "officePhone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "address1": {
+      "type": "string",
+      "required": true
+    },
+    "address2": {
+      "type": "string"
+    },
+    "hasUsedDConnect": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "lastDConnectLoginAt": {
+      "type": "datetime"
+    },
+    "hasRegisteredEkyc": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "lastEkycRegisteredAt": {
+      "type": "datetime"
+    },
+    "rewardPoints": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "purchasedContractsCount": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "insuredContractsCount": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    }
+  }
 }
