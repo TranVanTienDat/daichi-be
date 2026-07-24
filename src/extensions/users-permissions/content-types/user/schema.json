@@ -83,6 +83,12 @@
       "relation": "oneToMany",
       "target": "api::insurance-contract.insurance-contract",
       "mappedBy": "user"
+    },
+    "customers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::customer.customer",
+      "mappedBy": "staff"
     }
   }
 }

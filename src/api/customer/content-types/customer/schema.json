@@ -28,18 +28,33 @@
       "type": "enumeration",
       "required": true,
       "default": "loyal",
-      "enum": ["loyal", "silver", "gold", "platinum", "diamond"]
+      "enum": [
+        "loyal",
+        "silver",
+        "gold",
+        "platinum",
+        "diamond"
+      ]
     },
     "gender": {
       "type": "enumeration",
-      "enum": ["male", "female", "other"]
+      "enum": [
+        "male",
+        "female",
+        "other"
+      ]
     },
     "dateOfBirth": {
       "type": "date"
     },
     "maritalStatus": {
       "type": "enumeration",
-      "enum": ["single", "married", "divorced", "widowed"]
+      "enum": [
+        "single",
+        "married",
+        "divorced",
+        "widowed"
+      ]
     },
     "mobilePhone": {
       "type": "string"
@@ -55,7 +70,7 @@
     },
     "address1": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "address2": {
       "type": "string"
@@ -104,6 +119,12 @@
       "relation": "oneToMany",
       "target": "api::insurance-contract.insurance-contract",
       "mappedBy": "customer"
+    },
+    "staff": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "customers"
     }
   }
 }
