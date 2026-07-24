@@ -21,36 +21,25 @@
       "type": "string",
       "required": true
     },
+    "nickname": {
+      "type": "string"
+    },
     "customerTier": {
       "type": "enumeration",
       "required": true,
-      "default": "silver",
-      "enum": [
-        "silver",
-        "gold",
-        "platinum",
-        "diamond"
-      ]
+      "default": "loyal",
+      "enum": ["loyal", "silver", "gold", "platinum", "diamond"]
     },
     "gender": {
       "type": "enumeration",
-      "enum": [
-        "male",
-        "female",
-        "other"
-      ]
+      "enum": ["male", "female", "other"]
     },
     "dateOfBirth": {
       "type": "date"
     },
     "maritalStatus": {
       "type": "enumeration",
-      "enum": [
-        "single",
-        "married",
-        "divorced",
-        "widowed"
-      ]
+      "enum": ["single", "married", "divorced", "widowed"]
     },
     "mobilePhone": {
       "type": "string"
@@ -79,6 +68,11 @@
     "lastDConnectLoginAt": {
       "type": "datetime"
     },
+    "hasUpdatedCitizen": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
     "hasRegisteredEkyc": {
       "type": "boolean",
       "required": true,
@@ -99,7 +93,7 @@
       "default": 0,
       "min": 0
     },
-    "insuredContractsCount": {
+    "expiredContractsCount": {
       "type": "integer",
       "required": true,
       "default": 0,

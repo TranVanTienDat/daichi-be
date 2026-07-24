@@ -110,6 +110,12 @@
       "relation": "oneToMany",
       "target": "api::contract-rider.contract-rider",
       "mappedBy": "insurance_contract"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "insurance_contracts"
     }
   }
 }

@@ -75,8 +75,14 @@
     },
     "phoneNumber": {
       "type": "string",
-      "required": true,
+      "required": false,
       "regex": "^(0|\\+84)[3|5|7|8|9][0-9]{8}$"
+    },
+    "insurance_contracts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::insurance-contract.insurance-contract",
+      "mappedBy": "user"
     }
   }
 }

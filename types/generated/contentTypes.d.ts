@@ -538,15 +538,27 @@ export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     customerTier: Schema.Attribute.Enumeration<
-      ['silver', 'gold', 'platinum', 'diamond']
+      ['loyal', 'silver', 'gold', 'platinum', 'diamond']
     > &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'silver'>;
+      Schema.Attribute.DefaultTo<'loyal'>;
     dateOfBirth: Schema.Attribute.Date;
     email: Schema.Attribute.Email;
+    expiredContractsCount: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     fullName: Schema.Attribute.String & Schema.Attribute.Required;
     gender: Schema.Attribute.Enumeration<['male', 'female', 'other']>;
     hasRegisteredEkyc: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    hasUpdatedCitizen: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
     hasUsedDConnect: Schema.Attribute.Boolean &
@@ -557,15 +569,6 @@ export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::insurance-contract.insurance-contract'
     >;
-    insuredContractsCount: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
     lastDConnectLoginAt: Schema.Attribute.DateTime;
     lastEkycRegisteredAt: Schema.Attribute.DateTime;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -578,6 +581,7 @@ export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
       ['single', 'married', 'divorced', 'widowed']
     >;
     mobilePhone: Schema.Attribute.String;
+    nickname: Schema.Attribute.String;
     officePhone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     purchasedContractsCount: Schema.Attribute.Integer &
@@ -668,6 +672,10 @@ export interface ApiInsuranceContractInsuranceContract
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1229,6 +1237,10 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    insurance_contracts: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::insurance-contract.insurance-contract'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1240,7 +1252,7 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
-    phoneNumber: Schema.Attribute.String & Schema.Attribute.Required;
+    phoneNumber: Schema.Attribute.String;
     position: Schema.Attribute.String & Schema.Attribute.Required;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
