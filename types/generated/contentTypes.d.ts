@@ -1242,6 +1242,7 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    fullName: Schema.Attribute.String & Schema.Attribute.Required;
     insurance_contracts: Schema.Attribute.Relation<
       'oneToMany',
       'api::insurance-contract.insurance-contract'

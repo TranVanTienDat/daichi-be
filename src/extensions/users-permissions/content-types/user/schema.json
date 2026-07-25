@@ -89,6 +89,10 @@
       "relation": "oneToMany",
       "target": "api::customer.customer",
       "mappedBy": "staff"
+    },
+    "fullName": {
+      "type": "string",
+      "required": true
     }
   }
 }
