@@ -1,0 +1,14 @@
+services:
+  strapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: daichi-strapi
+    restart: unless-stopped
+    ports:
+      - "${PORT:-1337}:1337"
+    env_file:
+      - .env
+
+volumes:
+  uploads:
