@@ -1,14 +1,24 @@
 services:
   strapi:
+    container_name: strapi
+    platform: linux/amd64 # bỏ dòng này nếu máy bạn không phải Apple Silicon (M1/M2/M3)
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: daichi-strapi
+    image: strapi:latest
     restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./config:/opt/app/config
+      - ./src:/opt/app/src
+      - ./package.json:/opt/package.json
+      - ./package-lock.json:/opt/package-lock.json
+      - ./.env:/opt/app/.env
+      - ./public/uploads:/opt/app/public/uploads
     ports:
-      - "${PORT:-1337}:1337"
-    env_file:
-      - .env
+      - "1337:1337"
+    networks:
+      - strapi
 
-volumes:
-  uploads:
+networks:
+  strapi:
+    name: strapi

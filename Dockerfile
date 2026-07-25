@@ -1,45 +1,28 @@
-# ─────────────────────────────────────────
-# Stage 1: Build
-# ─────────────────────────────────────────
-FROM node:20-slim AS builder
+FROM node:22-slim
 
-# Install build dependencies
+# Cài dependencies cần cho sharp/libvips
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 make g++ libvips-dev \
+    build-essential \
+    python3 \
+    libvips-dev \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
 
-COPY package.json package-lock.json ./
+WORKDIR /opt/
+COPY package.json yarn.lock ./
 
-RUN yarn install
+RUN yarn config set network-timeout 600000 -g \
+    && yarn install --frozen-lockfile
 
+ENV PATH=/opt/node_modules/.bin:$PATH
+
+WORKDIR /opt/app
 COPY . .
-
-RUN yarn build
-
-# ─────────────────────────────────────────
-# Stage 2: Production
-# ─────────────────────────────────────────
-FROM node:20-slim AS runner
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libvips \
-    && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /app
-
-ENV NODE_ENV=production
-
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/package-lock.json ./
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/favicon.png ./
-
-RUN mkdir -p /app/public/uploads
+RUN chown -R node:node /opt/app
+USER node
 
 EXPOSE 1337
-
-CMD ["yarn", "start"]
+CMD ["yarn", "run", "develop"]
