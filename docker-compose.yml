@@ -1,18 +1,13 @@
 services:
   strapi:
     container_name: strapi
-    platform: linux/amd64 # bỏ dòng này nếu máy bạn không phải Apple Silicon (M1/M2/M3)
+    platform: linux/amd64
     build:
       context: .
     image: strapi:latest
     restart: unless-stopped
     env_file: .env
     volumes:
-      - ./config:/opt/app/config
-      - ./src:/opt/app/src
-      - ./package.json:/opt/package.json
-      - ./package-lock.json:/opt/package-lock.json
-      - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
