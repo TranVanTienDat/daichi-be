@@ -74,6 +74,7 @@ COPY --from=prod-deps /opt/node_modules ./node_modules
 WORKDIR /opt/app
 COPY --from=builder /opt/app/dist ./dist
 COPY --from=builder /opt/app/public ./public
+COPY --from=builder /opt/app/src ./src
 COPY --from=builder /opt/app/package.json ./package.json
 COPY --from=builder /opt/app/tsconfig.json ./tsconfig.json
 COPY --from=builder /opt/app/scripts ./scripts
