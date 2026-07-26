@@ -76,6 +76,7 @@ COPY --from=builder /opt/app/dist ./dist
 COPY --from=builder /opt/app/public ./public
 COPY --from=builder /opt/app/package.json ./package.json
 COPY --from=builder /opt/app/tsconfig.json ./tsconfig.json
+COPY --from=builder /opt/app/scripts ./scripts
 
 RUN chown -R node:node /opt/app /opt/node_modules
 USER node

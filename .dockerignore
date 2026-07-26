@@ -7,7 +7,7 @@ dist
 .env.*
 !.env.example
 data
-scripts
+# scripts
 _DOC-AGENT
 *.log
 npm-debug.log*
