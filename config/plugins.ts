@@ -27,7 +27,10 @@ const config = ({
 }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   "users-permissions": {
     config: {
-      jwtManagement: "jwt",
+      jwtManagement: "legacy-support",
+      jwt: {
+        expiresIn: "2d", // Traditional JWT expiry
+      },
     },
   },
   upload: {
