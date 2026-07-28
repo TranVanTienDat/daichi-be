@@ -29,17 +29,6 @@
       "type": "decimal",
       "required": true
     },
-    "status": {
-      "type": "enumeration",
-      "required": true,
-      "default": "PENDING",
-      "enum": [
-        "ACTIVE",
-        "CANCELLED",
-        "EXPIRED",
-        "PENDING"
-      ]
-    },
     "effective_date": {
       "type": "date",
       "required": true
@@ -116,6 +105,16 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "insurance_contracts"
+    },
+    "ContractStatus": {
+      "type": "enumeration",
+      "required": false,
+      "enum": [
+        "ACTIVE",
+        "CANCELLED",
+        "EXPIRED",
+        "PENDING"
+      ]
     }
   }
 }

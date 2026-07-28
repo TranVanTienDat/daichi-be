@@ -637,6 +637,9 @@ export interface ApiInsuranceContractInsuranceContract
       'oneToMany',
       'api::contract-rider.contract-rider'
     >;
+    ContractStatus: Schema.Attribute.Enumeration<
+      ['ACTIVE', 'CANCELLED', 'EXPIRED', 'PENDING']
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -664,11 +667,6 @@ export interface ApiInsuranceContractInsuranceContract
       'api::policy-adjustment-request.policy-adjustment-request'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<
-      ['ACTIVE', 'CANCELLED', 'EXPIRED', 'PENDING']
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'PENDING'>;
     sum_insured: Schema.Attribute.Decimal & Schema.Attribute.Required;
     topup_premium: Schema.Attribute.Decimal;
     total_paid_premium: Schema.Attribute.Decimal;

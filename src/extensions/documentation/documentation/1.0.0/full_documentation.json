@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-07-27T12:57:26.462Z"
+    "x-generation-date": "2026-07-28T08:14:16.964Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -5134,15 +5134,6 @@
                 "type": "number",
                 "format": "float"
               },
-              "status": {
-                "type": "string",
-                "enum": [
-                  "ACTIVE",
-                  "CANCELLED",
-                  "EXPIRED",
-                  "PENDING"
-                ]
-              },
               "effective_date": {
                 "type": "string",
                 "format": "date"
@@ -6787,6 +6778,15 @@
                   }
                 }
               },
+              "ContractStatus": {
+                "type": "string",
+                "enum": [
+                  "ACTIVE",
+                  "CANCELLED",
+                  "EXPIRED",
+                  "PENDING"
+                ]
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -7274,15 +7274,6 @@
                 "sum_insured": {
                   "type": "number",
                   "format": "float"
-                },
-                "status": {
-                  "type": "string",
-                  "enum": [
-                    "ACTIVE",
-                    "CANCELLED",
-                    "EXPIRED",
-                    "PENDING"
-                  ]
                 },
                 "effective_date": {
                   "type": "string",
@@ -8928,6 +8919,15 @@
                     }
                   }
                 },
+                "ContractStatus": {
+                  "type": "string",
+                  "enum": [
+                    "ACTIVE",
+                    "CANCELLED",
+                    "EXPIRED",
+                    "PENDING"
+                  ]
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -9118,7 +9118,6 @@
               "insured_person_name",
               "contact_address",
               "sum_insured",
-              "status",
               "effective_date",
               "payment_frequency"
             ],
@@ -9136,15 +9135,6 @@
               "sum_insured": {
                 "type": "number",
                 "format": "float"
-              },
-              "status": {
-                "type": "string",
-                "enum": [
-                  "ACTIVE",
-                  "CANCELLED",
-                  "EXPIRED",
-                  "PENDING"
-                ]
               },
               "effective_date": {
                 "type": "string",
@@ -9260,6 +9250,15 @@
                 ],
                 "example": "string or id"
               },
+              "ContractStatus": {
+                "type": "string",
+                "enum": [
+                  "ACTIVE",
+                  "CANCELLED",
+                  "EXPIRED",
+                  "PENDING"
+                ]
+              },
               "locale": {
                 "type": "string"
               },
@@ -9323,7 +9322,6 @@
           "insured_person_name",
           "contact_address",
           "sum_insured",
-          "status",
           "effective_date",
           "payment_frequency"
         ],
@@ -9353,15 +9351,6 @@
           "sum_insured": {
             "type": "number",
             "format": "float"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "ACTIVE",
-              "CANCELLED",
-              "EXPIRED",
-              "PENDING"
-            ]
           },
           "effective_date": {
             "type": "string",
@@ -9558,15 +9547,6 @@
                     "sum_insured": {
                       "type": "number",
                       "format": "float"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "ACTIVE",
-                        "CANCELLED",
-                        "EXPIRED",
-                        "PENDING"
-                      ]
                     },
                     "effective_date": {
                       "type": "string",
@@ -11016,6 +10996,15 @@
                         }
                       }
                     },
+                    "ContractStatus": {
+                      "type": "string",
+                      "enum": [
+                        "ACTIVE",
+                        "CANCELLED",
+                        "EXPIRED",
+                        "PENDING"
+                      ]
+                    },
                     "createdAt": {
                       "type": "string",
                       "format": "date-time"
@@ -11242,6 +11231,15 @@
                 "type": "string"
               }
             }
+          },
+          "ContractStatus": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "CANCELLED",
+              "EXPIRED",
+              "PENDING"
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -11548,15 +11546,6 @@
               "sum_insured": {
                 "type": "number",
                 "format": "float"
-              },
-              "status": {
-                "type": "string",
-                "enum": [
-                  "ACTIVE",
-                  "CANCELLED",
-                  "EXPIRED",
-                  "PENDING"
-                ]
               },
               "effective_date": {
                 "type": "string",
@@ -13201,6 +13190,15 @@
                     "type": "string"
                   }
                 }
+              },
+              "ContractStatus": {
+                "type": "string",
+                "enum": [
+                  "ACTIVE",
+                  "CANCELLED",
+                  "EXPIRED",
+                  "PENDING"
+                ]
               },
               "createdAt": {
                 "type": "string",
