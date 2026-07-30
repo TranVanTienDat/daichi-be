@@ -63,23 +63,9 @@ export default factories.createCoreController(
         );
       }
 
-      const fullUser = await strapi
-        .query("plugin::users-permissions.user")
-        .findOne({ where: { id: user.id }, populate: ["role"] });
-
-      const isAdmin =
-        fullUser?.role?.type === "admin" || fullUser?.role?.name === "Admin";
-
-      let staffFilter: Record<string, unknown> = {};
-
-      if (isAdmin) {
-        const staffId = ctx.query?.staffId as string | undefined;
-        if (staffId) {
-          staffFilter = { staff: { id: { $eq: Number(staffId) } } };
-        }
-      } else {
-        staffFilter = { staff: { id: { $eq: user.id } } };
-      }
+      const staffFilter: Record<string, unknown> = {
+        staff: { id: { $eq: user.id } },
+      };
 
       const page = Math.max(1, Number(ctx.query?.page ?? 1));
       const pageSize = Math.min(
