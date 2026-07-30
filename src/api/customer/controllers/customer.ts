@@ -5,6 +5,8 @@ import type { Context } from "koa";
 type CoreController = {
   sanitizeInput: (data: unknown, ctx: Context) => Promise<unknown>;
   sanitizeOutput: (data: unknown, ctx: Context) => Promise<unknown>;
+  sanitizeQuery: (ctx: Context) => Promise<Record<string, any>>;
+  validateQuery: (ctx: Context) => Promise<void>;
   transformResponse: (data: unknown, meta?: unknown) => unknown;
   [key: string]: unknown;
 };
@@ -56,40 +58,42 @@ export default factories.createCoreController(
     // GET /api/customers/staff
     async getByStaff(ctx: Context) {
       const user = ctx.state.user;
-
       if (!user) {
         throw new UnauthorizedError(
           "Bạn cần đăng nhập để thực hiện thao tác này.",
         );
       }
 
-      const clientFilters =
-        (ctx.query?.filters as Record<string, unknown>) ?? {};
+      const self = this as unknown as CoreController;
+      await self.validateQuery(ctx);
+      const sanitizedQuery = await self.sanitizeQuery(ctx);
 
-      const staffFilter = {
-        $and: [{ staff: { id: { $eq: user.id } } }, clientFilters],
+      // Merge filter của staff vào filters từ client
+      const filters = {
+        $and: [
+          { staff: { id: { $eq: user.id } } },
+          ...(sanitizedQuery.filters ? [sanitizedQuery.filters] : []),
+        ],
       };
 
-      const page = Math.max(1, Number(ctx.query?.page ?? 1));
-      const pageSize = Math.min(
-        100,
-        Math.max(1, Number(ctx.query?.pageSize ?? 25)),
-      );
+      const { pagination, sort, populate, fields } = sanitizedQuery;
+
+      const page = Math.max(1, pagination?.page ?? 1);
+      const pageSize = Math.min(100, Math.max(1, pagination?.pageSize ?? 25));
       const start = (page - 1) * pageSize;
 
       const [customers, count] = await Promise.all([
         strapi.documents("api::customer.customer").findMany({
-          filters: staffFilter as any,
+          filters,
+          populate,
+          sort,
+          fields,
           start,
           limit: pageSize,
         }),
-        strapi.documents("api::customer.customer").count({
-          filters: staffFilter as any,
-        }),
+        strapi.documents("api::customer.customer").count({ filters }),
       ]);
 
-      // Sanitize output
-      const self = this as unknown as CoreController;
       const sanitizedCustomers = await self.sanitizeOutput(customers, ctx);
 
       return self.transformResponse(sanitizedCustomers, {
