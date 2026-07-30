@@ -82,7 +82,6 @@ export default factories.createCoreController(
           filters: staffFilter as any,
           start,
           limit: pageSize,
-          sort: { createdAt: "desc" },
         }),
         strapi.documents("api::customer.customer").count({
           filters: staffFilter as any,
