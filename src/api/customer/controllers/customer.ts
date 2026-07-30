@@ -63,8 +63,11 @@ export default factories.createCoreController(
         );
       }
 
-      const staffFilter: Record<string, unknown> = {
-        staff: { id: { $eq: user.id } },
+      const clientFilters =
+        (ctx.query?.filters as Record<string, unknown>) ?? {};
+
+      const staffFilter = {
+        $and: [{ staff: { id: { $eq: user.id } } }, clientFilters],
       };
 
       const page = Math.max(1, Number(ctx.query?.page ?? 1));
