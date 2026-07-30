@@ -80,7 +80,6 @@ export default factories.createCoreController(
       const [customers, count] = await Promise.all([
         strapi.documents("api::customer.customer").findMany({
           filters: staffFilter as any,
-          populate: ["staff"],
           start,
           limit: pageSize,
           sort: { createdAt: "desc" },
