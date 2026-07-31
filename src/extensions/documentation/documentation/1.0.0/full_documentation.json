@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-07-30T10:28:07.221Z"
+    "x-generation-date": "2026-07-31T08:11:39.978Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -6468,16 +6468,6 @@
                     "request_type": {
                       "type": "string"
                     },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "PENDING",
-                        "IN_PROGRESS",
-                        "WAITING_SUPPLEMENT",
-                        "COMPLETED",
-                        "REJECTED"
-                      ]
-                    },
                     "received_date": {
                       "type": "string",
                       "format": "date"
@@ -6520,6 +6510,16 @@
                           "type": "string"
                         }
                       }
+                    },
+                    "status_requirement": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING",
+                        "IN_PROGRESS",
+                        "WAITING_SUPPLEMENT",
+                        "COMPLETED",
+                        "REJECTED"
+                      ]
                     },
                     "createdAt": {
                       "type": "string",
@@ -8609,16 +8609,6 @@
                       "request_type": {
                         "type": "string"
                       },
-                      "status": {
-                        "type": "string",
-                        "enum": [
-                          "PENDING",
-                          "IN_PROGRESS",
-                          "WAITING_SUPPLEMENT",
-                          "COMPLETED",
-                          "REJECTED"
-                        ]
-                      },
                       "received_date": {
                         "type": "string",
                         "format": "date"
@@ -8661,6 +8651,16 @@
                             "type": "string"
                           }
                         }
+                      },
+                      "status_requirement": {
+                        "type": "string",
+                        "enum": [
+                          "PENDING",
+                          "IN_PROGRESS",
+                          "WAITING_SUPPLEMENT",
+                          "COMPLETED",
+                          "REJECTED"
+                        ]
                       },
                       "createdAt": {
                         "type": "string",
@@ -9657,16 +9657,6 @@
                           "request_type": {
                             "type": "string"
                           },
-                          "status": {
-                            "type": "string",
-                            "enum": [
-                              "PENDING",
-                              "IN_PROGRESS",
-                              "WAITING_SUPPLEMENT",
-                              "COMPLETED",
-                              "REJECTED"
-                            ]
-                          },
                           "received_date": {
                             "type": "string",
                             "format": "date"
@@ -9709,6 +9699,16 @@
                                 "type": "string"
                               }
                             }
+                          },
+                          "status_requirement": {
+                            "type": "string",
+                            "enum": [
+                              "PENDING",
+                              "IN_PROGRESS",
+                              "WAITING_SUPPLEMENT",
+                              "COMPLETED",
+                              "REJECTED"
+                            ]
                           },
                           "createdAt": {
                             "type": "string",
@@ -11336,8 +11336,8 @@
             "required": [
               "policyholder_name",
               "request_type",
-              "status",
-              "received_date"
+              "received_date",
+              "status_requirement"
             ],
             "type": "object",
             "properties": {
@@ -11349,16 +11349,6 @@
               },
               "request_type": {
                 "type": "string"
-              },
-              "status": {
-                "type": "string",
-                "enum": [
-                  "PENDING",
-                  "IN_PROGRESS",
-                  "WAITING_SUPPLEMENT",
-                  "COMPLETED",
-                  "REJECTED"
-                ]
               },
               "received_date": {
                 "type": "string",
@@ -11395,6 +11385,16 @@
                   }
                 ],
                 "example": "string or id"
+              },
+              "status_requirement": {
+                "type": "string",
+                "enum": [
+                  "PENDING",
+                  "IN_PROGRESS",
+                  "WAITING_SUPPLEMENT",
+                  "COMPLETED",
+                  "REJECTED"
+                ]
               },
               "locale": {
                 "type": "string"
@@ -11457,8 +11457,8 @@
         "required": [
           "policyholder_name",
           "request_type",
-          "status",
-          "received_date"
+          "received_date",
+          "status_requirement"
         ],
         "properties": {
           "id": {
@@ -11482,16 +11482,6 @@
           },
           "request_type": {
             "type": "string"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "PENDING",
-              "IN_PROGRESS",
-              "WAITING_SUPPLEMENT",
-              "COMPLETED",
-              "REJECTED"
-            ]
           },
           "received_date": {
             "type": "string",
@@ -12881,16 +12871,6 @@
                     "request_type": {
                       "type": "string"
                     },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "PENDING",
-                        "IN_PROGRESS",
-                        "WAITING_SUPPLEMENT",
-                        "COMPLETED",
-                        "REJECTED"
-                      ]
-                    },
                     "received_date": {
                       "type": "string",
                       "format": "date"
@@ -12933,6 +12913,16 @@
                           "type": "string"
                         }
                       }
+                    },
+                    "status_requirement": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING",
+                        "IN_PROGRESS",
+                        "WAITING_SUPPLEMENT",
+                        "COMPLETED",
+                        "REJECTED"
+                      ]
                     },
                     "createdAt": {
                       "type": "string",
@@ -13273,6 +13263,16 @@
                 }
               }
             }
+          },
+          "status_requirement": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "IN_PROGRESS",
+              "WAITING_SUPPLEMENT",
+              "COMPLETED",
+              "REJECTED"
+            ]
           },
           "createdAt": {
             "type": "string",

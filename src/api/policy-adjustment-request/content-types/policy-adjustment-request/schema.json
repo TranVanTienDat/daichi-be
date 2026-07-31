@@ -23,18 +23,6 @@
       "type": "string",
       "required": true
     },
-    "status": {
-      "type": "enumeration",
-      "required": true,
-      "default": "PENDING",
-      "enum": [
-        "PENDING",
-        "IN_PROGRESS",
-        "WAITING_SUPPLEMENT",
-        "COMPLETED",
-        "REJECTED"
-      ]
-    },
     "received_date": {
       "type": "date",
       "required": true
@@ -62,6 +50,18 @@
       "relation": "manyToOne",
       "target": "api::insurance-contract.insurance-contract",
       "inversedBy": "policy_adjustment_requests"
+    },
+    "status_requirement": {
+      "type": "enumeration",
+      "required": true,
+      "default": "PENDING",
+      "enum": [
+        "PENDING",
+        "IN_PROGRESS",
+        "WAITING_SUPPLEMENT",
+        "COMPLETED",
+        "REJECTED"
+      ]
     }
   }
 }

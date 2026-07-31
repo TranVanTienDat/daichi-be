@@ -717,7 +717,7 @@ export interface ApiPolicyAdjustmentRequestPolicyAdjustmentRequest
     received_date: Schema.Attribute.Date & Schema.Attribute.Required;
     receiving_office: Schema.Attribute.String;
     request_type: Schema.Attribute.String & Schema.Attribute.Required;
-    status: Schema.Attribute.Enumeration<
+    status_requirement: Schema.Attribute.Enumeration<
       ['PENDING', 'IN_PROGRESS', 'WAITING_SUPPLEMENT', 'COMPLETED', 'REJECTED']
     > &
       Schema.Attribute.Required &
