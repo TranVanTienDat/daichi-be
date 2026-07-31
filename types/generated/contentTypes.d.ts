@@ -507,7 +507,9 @@ export interface ApiContractRiderContractRider
     product_tag: Schema.Attribute.Enumeration<['Ch\u00EDnh', 'B\u1ED5 sung']> &
       Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<['ACTIVE', 'INACTIVE', 'CANCELLED']> &
+    rider_status: Schema.Attribute.Enumeration<
+      ['ACTIVE', 'INACTIVE', 'CANCELLED']
+    > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'ACTIVE'>;
     sum_insured: Schema.Attribute.Decimal & Schema.Attribute.Required;

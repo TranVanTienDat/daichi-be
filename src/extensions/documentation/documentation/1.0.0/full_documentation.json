@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-07-31T08:11:39.978Z"
+    "x-generation-date": "2026-07-31T09:44:20.787Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -4904,7 +4904,7 @@
               "insured_person_name",
               "sum_insured",
               "periodic_premium",
-              "status"
+              "rider_status"
             ],
             "type": "object",
             "properties": {
@@ -4953,7 +4953,7 @@
                 "type": "string",
                 "format": "date"
               },
-              "status": {
+              "rider_status": {
                 "type": "string",
                 "enum": [
                   "ACTIVE",
@@ -5036,7 +5036,7 @@
           "insured_person_name",
           "sum_insured",
           "periodic_premium",
-          "status"
+          "rider_status"
         ],
         "properties": {
           "id": {
@@ -5097,7 +5097,7 @@
             "type": "string",
             "format": "date"
           },
-          "status": {
+          "rider_status": {
             "type": "string",
             "enum": [
               "ACTIVE",
@@ -6659,7 +6659,7 @@
                       "type": "string",
                       "format": "date"
                     },
-                    "status": {
+                    "rider_status": {
                       "type": "string",
                       "enum": [
                         "ACTIVE",
@@ -8800,7 +8800,7 @@
                         "type": "string",
                         "format": "date"
                       },
-                      "status": {
+                      "rider_status": {
                         "type": "string",
                         "enum": [
                           "ACTIVE",
@@ -10495,7 +10495,7 @@
                             "type": "string",
                             "format": "date"
                           },
-                          "status": {
+                          "rider_status": {
                             "type": "string",
                             "enum": [
                               "ACTIVE",
@@ -13062,7 +13062,7 @@
                       "type": "string",
                       "format": "date"
                     },
-                    "status": {
+                    "rider_status": {
                       "type": "string",
                       "enum": [
                         "ACTIVE",

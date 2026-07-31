@@ -56,7 +56,7 @@
     "coverage_end_date": {
       "type": "date"
     },
-    "status": {
+    "rider_status": {
       "type": "enumeration",
       "required": true,
       "default": "ACTIVE",
