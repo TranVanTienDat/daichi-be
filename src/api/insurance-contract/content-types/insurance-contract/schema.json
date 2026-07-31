@@ -111,6 +111,7 @@
       "required": false,
       "enum": [
         "ACTIVE",
+        "INACTIVE",
         "CANCELLED",
         "EXPIRED",
         "PENDING"

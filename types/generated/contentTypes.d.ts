@@ -640,7 +640,7 @@ export interface ApiInsuranceContractInsuranceContract
       'api::contract-rider.contract-rider'
     >;
     ContractStatus: Schema.Attribute.Enumeration<
-      ['ACTIVE', 'CANCELLED', 'EXPIRED', 'PENDING']
+      ['ACTIVE', 'INACTIVE', 'CANCELLED', 'EXPIRED', 'PENDING']
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

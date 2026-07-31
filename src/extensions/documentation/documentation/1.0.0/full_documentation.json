@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-07-31T10:13:48.470Z"
+    "x-generation-date": "2026-07-31T15:05:53.194Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -6782,6 +6782,7 @@
                 "type": "string",
                 "enum": [
                   "ACTIVE",
+                  "INACTIVE",
                   "CANCELLED",
                   "EXPIRED",
                   "PENDING"
@@ -8923,6 +8924,7 @@
                   "type": "string",
                   "enum": [
                     "ACTIVE",
+                    "INACTIVE",
                     "CANCELLED",
                     "EXPIRED",
                     "PENDING"
@@ -9254,6 +9256,7 @@
                 "type": "string",
                 "enum": [
                   "ACTIVE",
+                  "INACTIVE",
                   "CANCELLED",
                   "EXPIRED",
                   "PENDING"
@@ -11000,6 +11003,7 @@
                       "type": "string",
                       "enum": [
                         "ACTIVE",
+                        "INACTIVE",
                         "CANCELLED",
                         "EXPIRED",
                         "PENDING"
@@ -11236,6 +11240,7 @@
             "type": "string",
             "enum": [
               "ACTIVE",
+              "INACTIVE",
               "CANCELLED",
               "EXPIRED",
               "PENDING"
@@ -13185,6 +13190,7 @@
                 "type": "string",
                 "enum": [
                   "ACTIVE",
+                  "INACTIVE",
                   "CANCELLED",
                   "EXPIRED",
                   "PENDING"
