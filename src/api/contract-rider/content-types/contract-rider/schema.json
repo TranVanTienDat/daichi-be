@@ -56,6 +56,16 @@
     "coverage_end_date": {
       "type": "date"
     },
+    "rider_status": {
+      "type": "enumeration",
+      "required": true,
+      "default": "ACTIVE",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE",
+        "CANCELLED"
+      ]
+    },
     "insurance_contract": {
       "type": "relation",
       "relation": "manyToOne",
