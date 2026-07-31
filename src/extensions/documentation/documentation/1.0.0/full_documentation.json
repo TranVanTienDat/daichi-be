@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-07-31T09:44:20.787Z"
+    "x-generation-date": "2026-07-31T10:03:30.342Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -4903,8 +4903,7 @@
               "product_tag",
               "insured_person_name",
               "sum_insured",
-              "periodic_premium",
-              "rider_status"
+              "periodic_premium"
             ],
             "type": "object",
             "properties": {
@@ -4952,14 +4951,6 @@
               "coverage_end_date": {
                 "type": "string",
                 "format": "date"
-              },
-              "rider_status": {
-                "type": "string",
-                "enum": [
-                  "ACTIVE",
-                  "INACTIVE",
-                  "CANCELLED"
-                ]
               },
               "insurance_contract": {
                 "oneOf": [
@@ -5035,8 +5026,7 @@
           "product_tag",
           "insured_person_name",
           "sum_insured",
-          "periodic_premium",
-          "rider_status"
+          "periodic_premium"
         ],
         "properties": {
           "id": {
@@ -5096,14 +5086,6 @@
           "coverage_end_date": {
             "type": "string",
             "format": "date"
-          },
-          "rider_status": {
-            "type": "string",
-            "enum": [
-              "ACTIVE",
-              "INACTIVE",
-              "CANCELLED"
-            ]
           },
           "insurance_contract": {
             "type": "object",
@@ -6658,14 +6640,6 @@
                     "coverage_end_date": {
                       "type": "string",
                       "format": "date"
-                    },
-                    "rider_status": {
-                      "type": "string",
-                      "enum": [
-                        "ACTIVE",
-                        "INACTIVE",
-                        "CANCELLED"
-                      ]
                     },
                     "insurance_contract": {
                       "type": "object",
@@ -8800,14 +8774,6 @@
                         "type": "string",
                         "format": "date"
                       },
-                      "rider_status": {
-                        "type": "string",
-                        "enum": [
-                          "ACTIVE",
-                          "INACTIVE",
-                          "CANCELLED"
-                        ]
-                      },
                       "insurance_contract": {
                         "type": "object",
                         "properties": {
@@ -10494,14 +10460,6 @@
                           "coverage_end_date": {
                             "type": "string",
                             "format": "date"
-                          },
-                          "rider_status": {
-                            "type": "string",
-                            "enum": [
-                              "ACTIVE",
-                              "INACTIVE",
-                              "CANCELLED"
-                            ]
                           },
                           "insurance_contract": {
                             "type": "object",
@@ -13061,14 +13019,6 @@
                     "coverage_end_date": {
                       "type": "string",
                       "format": "date"
-                    },
-                    "rider_status": {
-                      "type": "string",
-                      "enum": [
-                        "ACTIVE",
-                        "INACTIVE",
-                        "CANCELLED"
-                      ]
                     },
                     "insurance_contract": {
                       "type": "object",
