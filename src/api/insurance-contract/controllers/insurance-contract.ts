@@ -105,5 +105,62 @@ export default factories.createCoreController(
         },
       });
     },
+
+    // GET /api/insurance-contracts/me/with-adjustment
+    async getByStaffWithAdjustment(ctx: Context) {
+      const user = ctx.state.user;
+      if (!user) {
+        throw new UnauthorizedError(
+          "Bạn cần đăng nhập để thực hiện thao tác này.",
+        );
+      }
+
+      const self = this as unknown as CoreController;
+      await self.validateQuery(ctx);
+      const sanitizedQuery = await self.sanitizeQuery(ctx);
+
+      const filters = {
+        $and: [
+          // Chỉ lấy hợp đồng của staff đang đăng nhập
+          { user: { id: { $eq: user.id } } },
+          // Chỉ lấy hợp đồng có ít nhất 1 policy_adjustment_request
+          { policy_adjustment_requests: { id: { $notNull: true } } },
+          ...(sanitizedQuery.filters ? [sanitizedQuery.filters] : []),
+        ],
+      };
+
+      const { pagination, sort, populate, fields } = sanitizedQuery;
+
+      const page = Math.max(1, pagination?.page ?? 1);
+      const pageSize = Math.min(100, Math.max(1, pagination?.pageSize ?? 25));
+      const start = (page - 1) * pageSize;
+
+      const [contracts, count] = await Promise.all([
+        strapi
+          .documents("api::insurance-contract.insurance-contract")
+          .findMany({
+            filters,
+            populate,
+            sort,
+            fields,
+            start,
+            limit: pageSize,
+          }),
+        strapi
+          .documents("api::insurance-contract.insurance-contract")
+          .count({ filters }),
+      ]);
+
+      const sanitizedContracts = await self.sanitizeOutput(contracts, ctx);
+
+      return self.transformResponse(sanitizedContracts, {
+        pagination: {
+          page,
+          pageSize,
+          pageCount: Math.ceil(count / pageSize),
+          total: count,
+        },
+      });
+    },
   }),
 );

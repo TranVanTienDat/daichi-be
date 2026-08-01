@@ -19,6 +19,15 @@ const config: Core.RouterConfig = {
         middlewares: [],
       },
     },
+    {
+      method: "GET",
+      path: "/insurance-contracts/me/with-adjustment",
+      handler:
+        "api::insurance-contract.insurance-contract.getByStaffWithAdjustment",
+      config: {
+        middlewares: [],
+      },
+    },
   ],
 };
 
