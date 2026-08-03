@@ -95,12 +95,20 @@ export default factories.createCoreController(
       await self.validateQuery(ctx);
       const sanitizedQuery = await self.sanitizeQuery(ctx);
 
-      // Nếu là admin thì có quyền get hết, ngược lại lấy theo staff (person_charge có id = user.id)
+      // Nếu là admin thì có quyền get hết
+      // Ngược lại lấy theo staff: task có user trong person_charge HOẶC user là người tạo (created_by_user)
+      const staffCondition = {
+        $or: [
+          { person_charge: { id: { $eq: user.id } } },
+          { created_by_user: { id: { $eq: user.id } } },
+        ],
+      };
+
       const filters = isAdmin
         ? (sanitizedQuery.filters ?? {})
         : {
             $and: [
-              { person_charge: { id: { $eq: user.id } } },
+              staffCondition,
               ...(sanitizedQuery.filters ? [sanitizedQuery.filters] : []),
             ],
           };
@@ -108,7 +116,10 @@ export default factories.createCoreController(
       const { pagination, sort, populate, fields } = sanitizedQuery;
 
       // Mặc định populate "person_charge" và "created_by_user" nếu client không truyền populate
-      const effectivePopulate = populate ?? ["person_charge", "created_by_user"];
+      const effectivePopulate = populate ?? [
+        "person_charge",
+        "created_by_user",
+      ];
 
       const page = Math.max(1, pagination?.page ?? 1);
       const pageSize = Math.min(100, Math.max(1, pagination?.pageSize ?? 25));
