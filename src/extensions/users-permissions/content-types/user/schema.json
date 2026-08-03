@@ -98,7 +98,13 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::task.task",
-      "inversedBy": "users"
+      "inversedBy": "person_charge"
+    },
+    "created_tasks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::task.task",
+      "mappedBy": "created_by_user"
     }
   }
 }

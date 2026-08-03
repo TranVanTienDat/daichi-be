@@ -45,22 +45,25 @@ export default factories.createCoreController(
         ctx,
       )) as Record<string, unknown>;
 
-      // Xử lý gắn user vào mảng users của task
+      // Xử lý gắn user vào mảng person_charge của task
       let existingUsers: (number | string)[] = [];
-      if (Array.isArray(sanitizedInput.users)) {
-        existingUsers = sanitizedInput.users as (number | string)[];
-      } else if (sanitizedInput.users) {
-        existingUsers = [sanitizedInput.users as number | string];
+      if (Array.isArray(sanitizedInput.person_charge)) {
+        existingUsers = sanitizedInput.person_charge as (number | string)[];
+      } else if (sanitizedInput.person_charge) {
+        existingUsers = [sanitizedInput.person_charge as number | string];
       }
 
       if (!existingUsers.includes(user.id)) {
         existingUsers.push(user.id);
       }
-      sanitizedInput.users = existingUsers;
+      sanitizedInput.person_charge = existingUsers;
+
+      // Tự động gán người tạo task
+      sanitizedInput.created_by_user = user.id;
 
       const task = await strapi.documents("api::task.task").create({
         data: sanitizedInput as any,
-        populate: ["users"],
+        populate: ["person_charge", "created_by_user"],
       });
 
       const sanitizedTask = await self.sanitizeOutput(task, ctx);
@@ -92,17 +95,20 @@ export default factories.createCoreController(
       await self.validateQuery(ctx);
       const sanitizedQuery = await self.sanitizeQuery(ctx);
 
-      // Nếu là admin thì có quyền get hết, ngược lại lấy theo staff (users có id = user.id)
+      // Nếu là admin thì có quyền get hết, ngược lại lấy theo staff (person_charge có id = user.id)
       const filters = isAdmin
         ? (sanitizedQuery.filters ?? {})
         : {
             $and: [
-              { users: { id: { $eq: user.id } } },
+              { person_charge: { id: { $eq: user.id } } },
               ...(sanitizedQuery.filters ? [sanitizedQuery.filters] : []),
             ],
           };
 
       const { pagination, sort, populate, fields } = sanitizedQuery;
+
+      // Mặc định populate "person_charge" và "created_by_user" nếu client không truyền populate
+      const effectivePopulate = populate ?? ["person_charge", "created_by_user"];
 
       const page = Math.max(1, pagination?.page ?? 1);
       const pageSize = Math.min(100, Math.max(1, pagination?.pageSize ?? 25));
@@ -111,7 +117,7 @@ export default factories.createCoreController(
       const [tasks, count] = await Promise.all([
         strapi.documents("api::task.task").findMany({
           filters,
-          populate,
+          populate: effectivePopulate,
           sort,
           fields,
           start,

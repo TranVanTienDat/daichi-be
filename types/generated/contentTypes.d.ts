@@ -743,7 +743,10 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    contractId: Schema.Attribute.String;
+    created_by_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -752,6 +755,10 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::task.task'> &
       Schema.Attribute.Private;
+    person_charge: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
     priority: Schema.Attribute.Enumeration<
       ['LOW', 'MEDIUM', 'HIGH', 'URGENT']
     > &
@@ -767,10 +774,6 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users: Schema.Attribute.Relation<
-      'manyToMany',
-      'plugin::users-permissions.user'
-    >;
   };
 }
 
@@ -1235,6 +1238,7 @@ export interface PluginUsersPermissionsUser
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    created_tasks: Schema.Attribute.Relation<'oneToMany', 'api::task.task'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

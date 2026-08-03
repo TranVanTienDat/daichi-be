@@ -31,9 +31,6 @@
         "URGENT"
       ]
     },
-    "contractId": {
-      "type": "string"
-    },
     "dueDate": {
       "type": "datetime",
       "required": true
@@ -49,7 +46,7 @@
         "DONE"
       ]
     },
-    "users": {
+    "person_charge": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
@@ -57,6 +54,12 @@
     },
     "secondary_info": {
       "type": "text"
+    },
+    "created_by_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "created_tasks"
     }
   }
 }

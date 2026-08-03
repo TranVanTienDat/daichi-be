@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-08-03T03:54:33.289Z"
+    "x-generation-date": "2026-08-03T09:16:14.131Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -6326,9 +6326,6 @@
                                 "URGENT"
                               ]
                             },
-                            "contractId": {
-                              "type": "string"
-                            },
                             "dueDate": {
                               "type": "string",
                               "format": "date-time"
@@ -6342,7 +6339,7 @@
                                 "DONE"
                               ]
                             },
-                            "users": {
+                            "person_charge": {
                               "type": "array",
                               "items": {
                                 "type": "object",
@@ -6365,6 +6362,24 @@
                             },
                             "secondary_info": {
                               "type": "string"
+                            },
+                            "created_by_user": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
                             },
                             "createdAt": {
                               "type": "string",
@@ -6437,6 +6452,27 @@
                                   }
                                 }
                               }
+                            }
+                          }
+                        }
+                      },
+                      "created_tasks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "oneOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            },
+                            "documentId": {
+                              "type": "string"
                             }
                           }
                         }
@@ -8616,9 +8652,6 @@
                                   "URGENT"
                                 ]
                               },
-                              "contractId": {
-                                "type": "string"
-                              },
                               "dueDate": {
                                 "type": "string",
                                 "format": "date-time"
@@ -8632,7 +8665,7 @@
                                   "DONE"
                                 ]
                               },
-                              "users": {
+                              "person_charge": {
                                 "type": "array",
                                 "items": {
                                   "type": "object",
@@ -8655,6 +8688,24 @@
                               },
                               "secondary_info": {
                                 "type": "string"
+                              },
+                              "created_by_user": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
                               },
                               "createdAt": {
                                 "type": "string",
@@ -8727,6 +8778,27 @@
                                     }
                                   }
                                 }
+                              }
+                            }
+                          }
+                        },
+                        "created_tasks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "oneOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  }
+                                ]
+                              },
+                              "documentId": {
+                                "type": "string"
                               }
                             }
                           }
@@ -11254,9 +11326,6 @@
                                   "URGENT"
                                 ]
                               },
-                              "contractId": {
-                                "type": "string"
-                              },
                               "dueDate": {
                                 "type": "string",
                                 "format": "date-time"
@@ -11270,7 +11339,7 @@
                                   "DONE"
                                 ]
                               },
-                              "users": {
+                              "person_charge": {
                                 "type": "array",
                                 "items": {
                                   "type": "object",
@@ -11293,6 +11362,24 @@
                               },
                               "secondary_info": {
                                 "type": "string"
+                              },
+                              "created_by_user": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
                               },
                               "createdAt": {
                                 "type": "string",
@@ -11365,6 +11452,27 @@
                                     }
                                   }
                                 }
+                              }
+                            }
+                          }
+                        },
+                        "created_tasks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "oneOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  }
+                                ]
+                              },
+                              "documentId": {
+                                "type": "string"
                               }
                             }
                           }
@@ -13178,9 +13286,6 @@
                                 "URGENT"
                               ]
                             },
-                            "contractId": {
-                              "type": "string"
-                            },
                             "dueDate": {
                               "type": "string",
                               "format": "date-time"
@@ -13194,7 +13299,7 @@
                                 "DONE"
                               ]
                             },
-                            "users": {
+                            "person_charge": {
                               "type": "array",
                               "items": {
                                 "type": "object",
@@ -13217,6 +13322,24 @@
                             },
                             "secondary_info": {
                               "type": "string"
+                            },
+                            "created_by_user": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
                             },
                             "createdAt": {
                               "type": "string",
@@ -13289,6 +13412,27 @@
                                   }
                                 }
                               }
+                            }
+                          }
+                        }
+                      },
+                      "created_tasks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "oneOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            },
+                            "documentId": {
+                              "type": "string"
                             }
                           }
                         }
@@ -13987,9 +14131,6 @@
                   "URGENT"
                 ]
               },
-              "contractId": {
-                "type": "string"
-              },
               "dueDate": {
                 "type": "string",
                 "format": "date-time"
@@ -14003,7 +14144,7 @@
                   "DONE"
                 ]
               },
-              "users": {
+              "person_charge": {
                 "type": "array",
                 "items": {
                   "oneOf": [
@@ -14019,6 +14160,17 @@
               },
               "secondary_info": {
                 "type": "string"
+              },
+              "created_by_user": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "example": "string or id"
               },
               "locale": {
                 "type": "string"
@@ -14113,9 +14265,6 @@
               "URGENT"
             ]
           },
-          "contractId": {
-            "type": "string"
-          },
           "dueDate": {
             "type": "string",
             "format": "date-time"
@@ -14129,7 +14278,7 @@
               "DONE"
             ]
           },
-          "users": {
+          "person_charge": {
             "type": "array",
             "items": {
               "type": "object",
@@ -15847,9 +15996,6 @@
                           "URGENT"
                         ]
                       },
-                      "contractId": {
-                        "type": "string"
-                      },
                       "dueDate": {
                         "type": "string",
                         "format": "date-time"
@@ -15863,7 +16009,7 @@
                           "DONE"
                         ]
                       },
-                      "users": {
+                      "person_charge": {
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -15886,6 +16032,24 @@
                       },
                       "secondary_info": {
                         "type": "string"
+                      },
+                      "created_by_user": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "documentId": {
+                            "type": "string"
+                          }
+                        }
                       },
                       "createdAt": {
                         "type": "string",
@@ -15958,6 +16122,27 @@
                             }
                           }
                         }
+                      }
+                    }
+                  }
+                },
+                "created_tasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "documentId": {
+                        "type": "string"
                       }
                     }
                   }
@@ -16039,6 +16224,24 @@
           },
           "secondary_info": {
             "type": "string"
+          },
+          "created_by_user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "documentId": {
+                "type": "string"
+              }
+            }
           },
           "createdAt": {
             "type": "string",
