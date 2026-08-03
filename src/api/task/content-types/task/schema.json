@@ -20,24 +20,16 @@
       "type": "text",
       "required": true
     },
-    "status": {
-      "type": "enumeration",
-      "enum": ["TODO", "IN_PROGRESS", "REVIEW", "DONE"],
-      "required": true,
-      "default": "TODO"
-    },
     "priority": {
       "type": "enumeration",
-      "enum": ["LOW", "MEDIUM", "HIGH", "URGENT"],
       "required": true,
-      "default": "MEDIUM"
-    },
-    "assigneeId": {
-      "type": "string",
-      "required": true
-    },
-    "customerId": {
-      "type": "string"
+      "default": "MEDIUM",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "URGENT"
+      ]
     },
     "contractId": {
       "type": "string"
@@ -45,6 +37,26 @@
     "dueDate": {
       "type": "datetime",
       "required": true
+    },
+    "task_status": {
+      "type": "enumeration",
+      "required": false,
+      "default": "TODO",
+      "enum": [
+        "TODO",
+        "IN_PROGRESS",
+        "REVIEW",
+        "DONE"
+      ]
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "tasks"
+    },
+    "secondary_info": {
+      "type": "text"
     }
   }
 }

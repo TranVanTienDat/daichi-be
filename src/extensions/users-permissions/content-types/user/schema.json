@@ -93,6 +93,12 @@
     "fullName": {
       "type": "string",
       "required": true
+    },
+    "tasks": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::task.task",
+      "inversedBy": "users"
     }
   }
 }

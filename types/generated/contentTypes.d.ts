@@ -743,12 +743,10 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    assigneeId: Schema.Attribute.String & Schema.Attribute.Required;
     contractId: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    customerId: Schema.Attribute.String;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
     dueDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -760,15 +758,19 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'MEDIUM'>;
     publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<
+    secondary_info: Schema.Attribute.Text;
+    task_status: Schema.Attribute.Enumeration<
       ['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE']
     > &
-      Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'TODO'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    users: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1267,6 +1269,7 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    tasks: Schema.Attribute.Relation<'manyToMany', 'api::task.task'>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

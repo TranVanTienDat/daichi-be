@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-07-31T15:05:53.194Z"
+    "x-generation-date": "2026-08-03T03:54:33.289Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -6293,6 +6293,154 @@
                       "fullName": {
                         "type": "string"
                       },
+                      "tasks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "oneOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            },
+                            "documentId": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "priority": {
+                              "type": "string",
+                              "enum": [
+                                "LOW",
+                                "MEDIUM",
+                                "HIGH",
+                                "URGENT"
+                              ]
+                            },
+                            "contractId": {
+                              "type": "string"
+                            },
+                            "dueDate": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "task_status": {
+                              "type": "string",
+                              "enum": [
+                                "TODO",
+                                "IN_PROGRESS",
+                                "REVIEW",
+                                "DONE"
+                              ]
+                            },
+                            "users": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "secondary_info": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "publishedAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "createdBy": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "updatedBy": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "locale": {
+                              "type": "string"
+                            },
+                            "localizations": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -8434,6 +8582,154 @@
                         },
                         "fullName": {
                           "type": "string"
+                        },
+                        "tasks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "oneOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  }
+                                ]
+                              },
+                              "documentId": {
+                                "type": "string"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "priority": {
+                                "type": "string",
+                                "enum": [
+                                  "LOW",
+                                  "MEDIUM",
+                                  "HIGH",
+                                  "URGENT"
+                                ]
+                              },
+                              "contractId": {
+                                "type": "string"
+                              },
+                              "dueDate": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "task_status": {
+                                "type": "string",
+                                "enum": [
+                                  "TODO",
+                                  "IN_PROGRESS",
+                                  "REVIEW",
+                                  "DONE"
+                                ]
+                              },
+                              "users": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "oneOf": [
+                                        {
+                                          "type": "string"
+                                        },
+                                        {
+                                          "type": "number"
+                                        }
+                                      ]
+                                    },
+                                    "documentId": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              },
+                              "secondary_info": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "publishedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "createdBy": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "updatedBy": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "locale": {
+                                "type": "string"
+                              },
+                              "localizations": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "oneOf": [
+                                        {
+                                          "type": "string"
+                                        },
+                                        {
+                                          "type": "number"
+                                        }
+                                      ]
+                                    },
+                                    "documentId": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
                         },
                         "createdAt": {
                           "type": "string",
@@ -10925,6 +11221,154 @@
                         "fullName": {
                           "type": "string"
                         },
+                        "tasks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "oneOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  }
+                                ]
+                              },
+                              "documentId": {
+                                "type": "string"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "priority": {
+                                "type": "string",
+                                "enum": [
+                                  "LOW",
+                                  "MEDIUM",
+                                  "HIGH",
+                                  "URGENT"
+                                ]
+                              },
+                              "contractId": {
+                                "type": "string"
+                              },
+                              "dueDate": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "task_status": {
+                                "type": "string",
+                                "enum": [
+                                  "TODO",
+                                  "IN_PROGRESS",
+                                  "REVIEW",
+                                  "DONE"
+                                ]
+                              },
+                              "users": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "oneOf": [
+                                        {
+                                          "type": "string"
+                                        },
+                                        {
+                                          "type": "number"
+                                        }
+                                      ]
+                                    },
+                                    "documentId": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              },
+                              "secondary_info": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "publishedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "createdBy": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "updatedBy": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "locale": {
+                                "type": "string"
+                              },
+                              "localizations": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "oneOf": [
+                                        {
+                                          "type": "string"
+                                        },
+                                        {
+                                          "type": "number"
+                                        }
+                                      ]
+                                    },
+                                    "documentId": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
                         "createdAt": {
                           "type": "string",
                           "format": "date-time"
@@ -12701,6 +13145,154 @@
                       "fullName": {
                         "type": "string"
                       },
+                      "tasks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "oneOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            },
+                            "documentId": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "priority": {
+                              "type": "string",
+                              "enum": [
+                                "LOW",
+                                "MEDIUM",
+                                "HIGH",
+                                "URGENT"
+                              ]
+                            },
+                            "contractId": {
+                              "type": "string"
+                            },
+                            "dueDate": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "task_status": {
+                              "type": "string",
+                              "enum": [
+                                "TODO",
+                                "IN_PROGRESS",
+                                "REVIEW",
+                                "DONE"
+                              ]
+                            },
+                            "users": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "secondary_info": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "publishedAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "createdBy": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "updatedBy": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "locale": {
+                              "type": "string"
+                            },
+                            "localizations": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -13375,9 +13967,7 @@
             "required": [
               "title",
               "description",
-              "status",
               "priority",
-              "assigneeId",
               "dueDate"
             ],
             "type": "object",
@@ -13388,15 +13978,6 @@
               "description": {
                 "type": "string"
               },
-              "status": {
-                "type": "string",
-                "enum": [
-                  "TODO",
-                  "IN_PROGRESS",
-                  "REVIEW",
-                  "DONE"
-                ]
-              },
               "priority": {
                 "type": "string",
                 "enum": [
@@ -13406,18 +13987,38 @@
                   "URGENT"
                 ]
               },
-              "assigneeId": {
-                "type": "string"
-              },
-              "customerId": {
-                "type": "string"
-              },
               "contractId": {
                 "type": "string"
               },
               "dueDate": {
                 "type": "string",
                 "format": "date-time"
+              },
+              "task_status": {
+                "type": "string",
+                "enum": [
+                  "TODO",
+                  "IN_PROGRESS",
+                  "REVIEW",
+                  "DONE"
+                ]
+              },
+              "users": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "example": "string or id"
+                }
+              },
+              "secondary_info": {
+                "type": "string"
               },
               "locale": {
                 "type": "string"
@@ -13480,9 +14081,7 @@
         "required": [
           "title",
           "description",
-          "status",
           "priority",
-          "assigneeId",
           "dueDate"
         ],
         "properties": {
@@ -13505,15 +14104,6 @@
           "description": {
             "type": "string"
           },
-          "status": {
-            "type": "string",
-            "enum": [
-              "TODO",
-              "IN_PROGRESS",
-              "REVIEW",
-              "DONE"
-            ]
-          },
           "priority": {
             "type": "string",
             "enum": [
@@ -13523,12 +14113,6 @@
               "URGENT"
             ]
           },
-          "assigneeId": {
-            "type": "string"
-          },
-          "customerId": {
-            "type": "string"
-          },
           "contractId": {
             "type": "string"
           },
@@ -13536,59 +14120,56 @@
             "type": "string",
             "format": "date-time"
           },
-          "createdAt": {
+          "task_status": {
             "type": "string",
-            "format": "date-time"
+            "enum": [
+              "TODO",
+              "IN_PROGRESS",
+              "REVIEW",
+              "DONE"
+            ]
           },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "publishedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "number"
-                  }
-                ]
-              },
-              "documentId": {
-                "type": "string"
-              },
-              "firstname": {
-                "type": "string"
-              },
-              "lastname": {
-                "type": "string"
-              },
-              "username": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string",
-                "format": "email"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "registrationToken": {
-                "type": "string"
-              },
-              "isActive": {
-                "type": "boolean"
-              },
-              "roles": {
-                "type": "array",
-                "items": {
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "documentId": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "resetPasswordToken": {
+                  "type": "string"
+                },
+                "confirmationToken": {
+                  "type": "string"
+                },
+                "confirmed": {
+                  "type": "boolean"
+                },
+                "blocked": {
+                  "type": "boolean"
+                },
+                "role": {
                   "type": "object",
                   "properties": {
                     "id": {
@@ -13607,32 +14188,11 @@
                     "name": {
                       "type": "string"
                     },
-                    "code": {
-                      "type": "string"
-                    },
                     "description": {
                       "type": "string"
                     },
-                    "users": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "oneOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "number"
-                              }
-                            ]
-                          },
-                          "documentId": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                    "type": {
+                      "type": "string"
                     },
                     "permissions": {
                       "type": "array",
@@ -13655,12 +14215,6 @@
                           "action": {
                             "type": "string"
                           },
-                          "actionParameters": {},
-                          "subject": {
-                            "type": "string"
-                          },
-                          "properties": {},
-                          "conditions": {},
                           "role": {
                             "type": "object",
                             "properties": {
@@ -13679,7 +14233,19 @@
                               }
                             }
                           },
-                          "apiToken": {
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "publishedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "createdBy": {
                             "type": "object",
                             "properties": {
                               "id": {
@@ -13695,38 +14261,29 @@
                               "documentId": {
                                 "type": "string"
                               },
-                              "name": {
+                              "firstname": {
                                 "type": "string"
                               },
-                              "description": {
+                              "lastname": {
                                 "type": "string"
                               },
-                              "kind": {
+                              "username": {
+                                "type": "string"
+                              },
+                              "email": {
                                 "type": "string",
-                                "enum": [
-                                  "content-api",
-                                  "admin"
-                                ]
+                                "format": "email"
                               },
-                              "type": {
-                                "type": "string",
-                                "enum": [
-                                  "read-only",
-                                  "full-access",
-                                  "custom"
-                                ]
-                              },
-                              "accessKey": {
+                              "resetPasswordToken": {
                                 "type": "string"
                               },
-                              "encryptedKey": {
+                              "registrationToken": {
                                 "type": "string"
                               },
-                              "lastUsedAt": {
-                                "type": "string",
-                                "format": "date-time"
+                              "isActive": {
+                                "type": "boolean"
                               },
-                              "permissions": {
+                              "roles": {
                                 "type": "array",
                                 "items": {
                                   "type": "object",
@@ -13744,24 +14301,436 @@
                                     "documentId": {
                                       "type": "string"
                                     },
-                                    "action": {
+                                    "name": {
                                       "type": "string"
                                     },
-                                    "token": {
-                                      "type": "object",
-                                      "properties": {
-                                        "id": {
-                                          "oneOf": [
-                                            {
-                                              "type": "string"
-                                            },
-                                            {
-                                              "type": "number"
+                                    "code": {
+                                      "type": "string"
+                                    },
+                                    "description": {
+                                      "type": "string"
+                                    },
+                                    "users": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "oneOf": [
+                                              {
+                                                "type": "string"
+                                              },
+                                              {
+                                                "type": "number"
+                                              }
+                                            ]
+                                          },
+                                          "documentId": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "permissions": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "oneOf": [
+                                              {
+                                                "type": "string"
+                                              },
+                                              {
+                                                "type": "number"
+                                              }
+                                            ]
+                                          },
+                                          "documentId": {
+                                            "type": "string"
+                                          },
+                                          "action": {
+                                            "type": "string"
+                                          },
+                                          "actionParameters": {},
+                                          "subject": {
+                                            "type": "string"
+                                          },
+                                          "properties": {},
+                                          "conditions": {},
+                                          "role": {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "oneOf": [
+                                                  {
+                                                    "type": "string"
+                                                  },
+                                                  {
+                                                    "type": "number"
+                                                  }
+                                                ]
+                                              },
+                                              "documentId": {
+                                                "type": "string"
+                                              }
                                             }
-                                          ]
-                                        },
-                                        "documentId": {
-                                          "type": "string"
+                                          },
+                                          "apiToken": {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "oneOf": [
+                                                  {
+                                                    "type": "string"
+                                                  },
+                                                  {
+                                                    "type": "number"
+                                                  }
+                                                ]
+                                              },
+                                              "documentId": {
+                                                "type": "string"
+                                              },
+                                              "name": {
+                                                "type": "string"
+                                              },
+                                              "description": {
+                                                "type": "string"
+                                              },
+                                              "kind": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "content-api",
+                                                  "admin"
+                                                ]
+                                              },
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "read-only",
+                                                  "full-access",
+                                                  "custom"
+                                                ]
+                                              },
+                                              "accessKey": {
+                                                "type": "string"
+                                              },
+                                              "encryptedKey": {
+                                                "type": "string"
+                                              },
+                                              "lastUsedAt": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                              },
+                                              "permissions": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "id": {
+                                                      "oneOf": [
+                                                        {
+                                                          "type": "string"
+                                                        },
+                                                        {
+                                                          "type": "number"
+                                                        }
+                                                      ]
+                                                    },
+                                                    "documentId": {
+                                                      "type": "string"
+                                                    },
+                                                    "action": {
+                                                      "type": "string"
+                                                    },
+                                                    "token": {
+                                                      "type": "object",
+                                                      "properties": {
+                                                        "id": {
+                                                          "oneOf": [
+                                                            {
+                                                              "type": "string"
+                                                            },
+                                                            {
+                                                              "type": "number"
+                                                            }
+                                                          ]
+                                                        },
+                                                        "documentId": {
+                                                          "type": "string"
+                                                        }
+                                                      }
+                                                    },
+                                                    "createdAt": {
+                                                      "type": "string",
+                                                      "format": "date-time"
+                                                    },
+                                                    "updatedAt": {
+                                                      "type": "string",
+                                                      "format": "date-time"
+                                                    },
+                                                    "publishedAt": {
+                                                      "type": "string",
+                                                      "format": "date-time"
+                                                    },
+                                                    "createdBy": {
+                                                      "type": "object",
+                                                      "properties": {
+                                                        "id": {
+                                                          "oneOf": [
+                                                            {
+                                                              "type": "string"
+                                                            },
+                                                            {
+                                                              "type": "number"
+                                                            }
+                                                          ]
+                                                        },
+                                                        "documentId": {
+                                                          "type": "string"
+                                                        }
+                                                      }
+                                                    },
+                                                    "updatedBy": {
+                                                      "type": "object",
+                                                      "properties": {
+                                                        "id": {
+                                                          "oneOf": [
+                                                            {
+                                                              "type": "string"
+                                                            },
+                                                            {
+                                                              "type": "number"
+                                                            }
+                                                          ]
+                                                        },
+                                                        "documentId": {
+                                                          "type": "string"
+                                                        }
+                                                      }
+                                                    },
+                                                    "locale": {
+                                                      "type": "string"
+                                                    },
+                                                    "localizations": {
+                                                      "type": "array",
+                                                      "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                          "id": {
+                                                            "oneOf": [
+                                                              {
+                                                                "type": "string"
+                                                              },
+                                                              {
+                                                                "type": "number"
+                                                              }
+                                                            ]
+                                                          },
+                                                          "documentId": {
+                                                            "type": "string"
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "adminPermissions": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "id": {
+                                                      "oneOf": [
+                                                        {
+                                                          "type": "string"
+                                                        },
+                                                        {
+                                                          "type": "number"
+                                                        }
+                                                      ]
+                                                    },
+                                                    "documentId": {
+                                                      "type": "string"
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "adminUserOwner": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "id": {
+                                                    "oneOf": [
+                                                      {
+                                                        "type": "string"
+                                                      },
+                                                      {
+                                                        "type": "number"
+                                                      }
+                                                    ]
+                                                  },
+                                                  "documentId": {
+                                                    "type": "string"
+                                                  }
+                                                }
+                                              },
+                                              "expiresAt": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                              },
+                                              "lifespan": {
+                                                "type": "string",
+                                                "pattern": "^\\d*$",
+                                                "example": "123456789"
+                                              },
+                                              "createdAt": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                              },
+                                              "updatedAt": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                              },
+                                              "publishedAt": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                              },
+                                              "createdBy": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "id": {
+                                                    "oneOf": [
+                                                      {
+                                                        "type": "string"
+                                                      },
+                                                      {
+                                                        "type": "number"
+                                                      }
+                                                    ]
+                                                  },
+                                                  "documentId": {
+                                                    "type": "string"
+                                                  }
+                                                }
+                                              },
+                                              "updatedBy": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "id": {
+                                                    "oneOf": [
+                                                      {
+                                                        "type": "string"
+                                                      },
+                                                      {
+                                                        "type": "number"
+                                                      }
+                                                    ]
+                                                  },
+                                                  "documentId": {
+                                                    "type": "string"
+                                                  }
+                                                }
+                                              },
+                                              "locale": {
+                                                "type": "string"
+                                              },
+                                              "localizations": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "id": {
+                                                      "oneOf": [
+                                                        {
+                                                          "type": "string"
+                                                        },
+                                                        {
+                                                          "type": "number"
+                                                        }
+                                                      ]
+                                                    },
+                                                    "documentId": {
+                                                      "type": "string"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "createdAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                          },
+                                          "updatedAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                          },
+                                          "publishedAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                          },
+                                          "createdBy": {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "oneOf": [
+                                                  {
+                                                    "type": "string"
+                                                  },
+                                                  {
+                                                    "type": "number"
+                                                  }
+                                                ]
+                                              },
+                                              "documentId": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          },
+                                          "updatedBy": {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "oneOf": [
+                                                  {
+                                                    "type": "string"
+                                                  },
+                                                  {
+                                                    "type": "number"
+                                                  }
+                                                ]
+                                              },
+                                              "documentId": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          },
+                                          "locale": {
+                                            "type": "string"
+                                          },
+                                          "localizations": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "object",
+                                              "properties": {
+                                                "id": {
+                                                  "oneOf": [
+                                                    {
+                                                      "type": "string"
+                                                    },
+                                                    {
+                                                      "type": "number"
+                                                    }
+                                                  ]
+                                                },
+                                                "documentId": {
+                                                  "type": "string"
+                                                }
+                                              }
+                                            }
+                                          }
                                         }
                                       }
                                     },
@@ -13840,7 +14809,7 @@
                                   }
                                 }
                               },
-                              "adminPermissions": {
+                              "apiTokens": {
                                 "type": "array",
                                 "items": {
                                   "type": "object",
@@ -13861,32 +14830,11 @@
                                   }
                                 }
                               },
-                              "adminUserOwner": {
-                                "type": "object",
-                                "properties": {
-                                  "id": {
-                                    "oneOf": [
-                                      {
-                                        "type": "string"
-                                      },
-                                      {
-                                        "type": "number"
-                                      }
-                                    ]
-                                  },
-                                  "documentId": {
-                                    "type": "string"
-                                  }
-                                }
+                              "blocked": {
+                                "type": "boolean"
                               },
-                              "expiresAt": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "lifespan": {
-                                "type": "string",
-                                "pattern": "^\\d*$",
-                                "example": "123456789"
+                              "preferedLanguage": {
+                                "type": "string"
                               },
                               "createdAt": {
                                 "type": "string",
@@ -13962,36 +14910,6 @@
                               }
                             }
                           },
-                          "createdAt": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updatedAt": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "publishedAt": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "createdBy": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "oneOf": [
-                                  {
-                                    "type": "string"
-                                  },
-                                  {
-                                    "type": "number"
-                                  }
-                                ]
-                              },
-                              "documentId": {
-                                "type": "string"
-                              }
-                            }
-                          },
                           "updatedBy": {
                             "type": "object",
                             "properties": {
@@ -14033,6 +14951,27 @@
                                 }
                               }
                             }
+                          }
+                        }
+                      }
+                    },
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "documentId": {
+                            "type": "string"
                           }
                         }
                       }
@@ -14110,184 +15049,918 @@
                       }
                     }
                   }
-                }
-              },
-              "apiTokens": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "number"
-                        }
-                      ]
-                    },
-                    "documentId": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "preferedLanguage": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "publishedAt": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "createdBy": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "oneOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "number"
-                      }
-                    ]
-                  },
-                  "documentId": {
-                    "type": "string"
-                  }
-                }
-              },
-              "updatedBy": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "oneOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "number"
-                      }
-                    ]
-                  },
-                  "documentId": {
-                    "type": "string"
-                  }
-                }
-              },
-              "locale": {
-                "type": "string"
-              },
-              "localizations": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "number"
-                        }
-                      ]
-                    },
-                    "documentId": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "updatedBy": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "number"
-                  }
-                ]
-              },
-              "documentId": {
-                "type": "string"
-              }
-            }
-          },
-          "locale": {
-            "type": "string"
-          },
-          "localizations": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "oneOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "number"
-                    }
-                  ]
                 },
-                "documentId": {
+                "position": {
                   "type": "string"
                 },
                 "title": {
                   "type": "string"
                 },
-                "description": {
+                "phoneNumber": {
                   "type": "string"
                 },
-                "status": {
-                  "type": "string",
-                  "enum": [
-                    "TODO",
-                    "IN_PROGRESS",
-                    "REVIEW",
-                    "DONE"
-                  ]
+                "insurance_contracts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "documentId": {
+                        "type": "string"
+                      },
+                      "contract_number": {
+                        "type": "string"
+                      },
+                      "insured_person_name": {
+                        "type": "string"
+                      },
+                      "contact_address": {
+                        "type": "string"
+                      },
+                      "sum_insured": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "effective_date": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "maturity_date": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "expiration_date": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "payment_frequency": {
+                        "type": "string",
+                        "enum": [
+                          "ANNUAL",
+                          "SEMI_ANNUAL",
+                          "QUARTERLY",
+                          "MONTHLY"
+                        ]
+                      },
+                      "grace_period_end_date": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "assignment_type": {
+                        "type": "string"
+                      },
+                      "assignment_date": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "estimated_periodic_premium": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "periodic_or_base_premium": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "total_paid_premium": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "base_premium": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "topup_premium": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "advance_premium_next_term": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "unpaid_past_base_premium": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "pending_suspense_premium": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "customer": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "documentId": {
+                            "type": "string"
+                          },
+                          "customerCode": {
+                            "type": "string"
+                          },
+                          "fullName": {
+                            "type": "string"
+                          },
+                          "nickname": {
+                            "type": "string"
+                          },
+                          "customerTier": {
+                            "type": "string",
+                            "enum": [
+                              "loyal",
+                              "silver",
+                              "gold",
+                              "platinum",
+                              "diamond"
+                            ]
+                          },
+                          "gender": {
+                            "type": "string",
+                            "enum": [
+                              "male",
+                              "female",
+                              "other"
+                            ]
+                          },
+                          "dateOfBirth": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "maritalStatus": {
+                            "type": "string",
+                            "enum": [
+                              "single",
+                              "married",
+                              "divorced",
+                              "widowed"
+                            ]
+                          },
+                          "mobilePhone": {
+                            "type": "string"
+                          },
+                          "homePhone": {
+                            "type": "string"
+                          },
+                          "officePhone": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email"
+                          },
+                          "address1": {
+                            "type": "string"
+                          },
+                          "address2": {
+                            "type": "string"
+                          },
+                          "hasUsedDConnect": {
+                            "type": "boolean"
+                          },
+                          "lastDConnectLoginAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "hasUpdatedCitizen": {
+                            "type": "boolean"
+                          },
+                          "hasRegisteredEkyc": {
+                            "type": "boolean"
+                          },
+                          "lastEkycRegisteredAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "rewardPoints": {
+                            "type": "integer"
+                          },
+                          "purchasedContractsCount": {
+                            "type": "integer"
+                          },
+                          "expiredContractsCount": {
+                            "type": "integer"
+                          },
+                          "insurance_contracts": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "staff": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "oneOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  }
+                                ]
+                              },
+                              "documentId": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "publishedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "createdBy": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "oneOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  }
+                                ]
+                              },
+                              "documentId": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "updatedBy": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "oneOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  }
+                                ]
+                              },
+                              "documentId": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "locale": {
+                            "type": "string"
+                          },
+                          "localizations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "policy_adjustment_requests": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "oneOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            },
+                            "documentId": {
+                              "type": "string"
+                            },
+                            "policyholder_name": {
+                              "type": "string"
+                            },
+                            "advisor_info": {
+                              "type": "string"
+                            },
+                            "request_type": {
+                              "type": "string"
+                            },
+                            "received_date": {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            "execution_date": {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            "supplement_deadline": {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            "receiving_office": {
+                              "type": "string"
+                            },
+                            "additional_info_notes": {
+                              "type": "string"
+                            },
+                            "assigned_staff_id": {
+                              "type": "string"
+                            },
+                            "assigned_at": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "insurance_contract": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "status_requirement": {
+                              "type": "string",
+                              "enum": [
+                                "PENDING",
+                                "IN_PROGRESS",
+                                "WAITING_SUPPLEMENT",
+                                "COMPLETED",
+                                "REJECTED"
+                              ]
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "publishedAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "createdBy": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "updatedBy": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "locale": {
+                              "type": "string"
+                            },
+                            "localizations": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "contract_riders": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "oneOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            },
+                            "documentId": {
+                              "type": "string"
+                            },
+                            "product_name": {
+                              "type": "string"
+                            },
+                            "product_tag": {
+                              "type": "string",
+                              "enum": [
+                                "Chính",
+                                "Bổ sung"
+                              ]
+                            },
+                            "insured_person_name": {
+                              "type": "string"
+                            },
+                            "insured_person_dob": {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            "insured_person_gender": {
+                              "type": "string",
+                              "enum": [
+                                "male",
+                                "female",
+                                "other"
+                              ]
+                            },
+                            "sum_insured": {
+                              "type": "number",
+                              "format": "float"
+                            },
+                            "periodic_premium": {
+                              "type": "number",
+                              "format": "float"
+                            },
+                            "effective_date": {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            "premium_due_date": {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            "coverage_end_date": {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            "rider_status": {
+                              "type": "string",
+                              "enum": [
+                                "ACTIVE",
+                                "INACTIVE",
+                                "CANCELLED"
+                              ]
+                            },
+                            "insurance_contract": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "publishedAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "createdBy": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "updatedBy": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "locale": {
+                              "type": "string"
+                            },
+                            "localizations": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "documentId": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "ContractStatus": {
+                        "type": "string",
+                        "enum": [
+                          "ACTIVE",
+                          "INACTIVE",
+                          "CANCELLED",
+                          "EXPIRED",
+                          "PENDING"
+                        ]
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "publishedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "createdBy": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "documentId": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "updatedBy": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "documentId": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "locale": {
+                        "type": "string"
+                      },
+                      "localizations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "oneOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            },
+                            "documentId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 },
-                "priority": {
-                  "type": "string",
-                  "enum": [
-                    "LOW",
-                    "MEDIUM",
-                    "HIGH",
-                    "URGENT"
-                  ]
+                "customers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "documentId": {
+                        "type": "string"
+                      }
+                    }
+                  }
                 },
-                "assigneeId": {
+                "fullName": {
                   "type": "string"
                 },
-                "customerId": {
-                  "type": "string"
-                },
-                "contractId": {
-                  "type": "string"
-                },
-                "dueDate": {
-                  "type": "string",
-                  "format": "date-time"
+                "tasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "documentId": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "priority": {
+                        "type": "string",
+                        "enum": [
+                          "LOW",
+                          "MEDIUM",
+                          "HIGH",
+                          "URGENT"
+                        ]
+                      },
+                      "contractId": {
+                        "type": "string"
+                      },
+                      "dueDate": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "task_status": {
+                        "type": "string",
+                        "enum": [
+                          "TODO",
+                          "IN_PROGRESS",
+                          "REVIEW",
+                          "DONE"
+                        ]
+                      },
+                      "users": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "oneOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            },
+                            "documentId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "secondary_info": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "publishedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "createdBy": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "documentId": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "updatedBy": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "documentId": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "locale": {
+                        "type": "string"
+                      },
+                      "localizations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "oneOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            },
+                            "documentId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 },
                 "createdAt": {
                   "type": "string",
@@ -14360,6 +16033,81 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          },
+          "secondary_info": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "documentId": {
+                "type": "string"
+              }
+            }
+          },
+          "updatedBy": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "documentId": {
+                "type": "string"
+              }
+            }
+          },
+          "locale": {
+            "type": "string"
+          },
+          "localizations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "documentId": {
+                  "type": "string"
                 }
               }
             }
