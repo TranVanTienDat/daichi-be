@@ -1,5 +1,5 @@
 import type { Core } from "@strapi/strapi";
-
+import type { EmailConfig } from "strapi-plugin-email-designer-5/dist/server/src";
 const allowedMediaTypes = [
   "image/*",
   "video/*",
@@ -40,6 +40,43 @@ const config = ({
         deniedTypes: deniedExecutableTypes,
       },
     },
+  },
+  email: {
+    config: {
+      provider: "nodemailer",
+      providerOptions: {
+        host: env("SMTP_HOST"),
+        port: env.int("SMTP_PORT", 587),
+        secure: false, // Use `true` for port 465
+        auth: {
+          user: env("SMTP_USERNAME"),
+          pass: env("SMTP_PASSWORD"),
+        },
+      },
+      settings: {
+        defaultFrom: env("EMAIL_FROM"),
+        defaultReplyTo: env("EMAIL_REPLY_TO"),
+      },
+    },
+  },
+  "email-designer-5": {
+    enabled: true,
+    // Your custom configuration here
+    config: {
+      // Here the Merge Tags defined will be merged with the defaults above
+      mergeTags: {
+        company: {
+          name: "Company",
+          mergeTags: {
+            name: {
+              name: "Company Name",
+              value: "ACME Corp",
+              sample: "ACME Corp",
+            },
+          },
+        },
+      },
+    } as EmailConfig,
   },
 });
 
