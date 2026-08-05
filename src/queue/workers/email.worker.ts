@@ -1,3 +1,4 @@
+import type { Core } from "@strapi/strapi";
 import type { Job } from "bullmq";
 import { QueueManager } from "../QueueManager";
 
@@ -26,7 +27,9 @@ const formatDate = (value: string) => {
   });
 };
 
-export const registerEmailWorker = () => {
+// Nhận strapiInstance từ bootstrap() để tránh "strapi is not defined"
+// vì BullMQ worker không có access vào global strapi
+export const registerEmailWorker = (strapiInstance: Core.Strapi) => {
   QueueManager.getInstance().registerWorker<TaskNotificationJobData>(
     EMAIL_QUEUE,
     async (job: Job<TaskNotificationJobData>) => {
@@ -37,19 +40,19 @@ export const registerEmailWorker = () => {
 
         await Promise.all(
           receivers.map((user) =>
-            (strapi as any)
+            (strapiInstance as any)
               .plugin("email-designer-5")
               .service("email")
               .sendTemplatedEmail(
                 { to: user.email },
-                { templateReferenceId: 2, subject: "Nhận được nhiệm vụ mới" },
+                { templateReferenceId: 1, subject: "Nhận được nhiệm vụ mới" },
                 {
                   USER: { fullName: user.fullName },
                   URL: taskUrl,
                   TASK: {
-                    name: task.title,
+                    fullName: task.title, // template dùng [TASK.fullName]
                     assignedBy: task.createdByFullName,
-                    deadline: formatDate(task.dueDate),
+                    dueDate: formatDate(task.dueDate), // template dùng [TASK.dueDate]
                   },
                 },
               )

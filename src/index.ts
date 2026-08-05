@@ -1,10 +1,10 @@
+import type { Core } from "@strapi/strapi";
 import { registerEmailWorker } from "./queue/workers/email.worker";
 
 export default {
   register() {},
 
-  bootstrap() {
-    // Đăng ký tất cả workers khi Strapi start
-    registerEmailWorker();
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    registerEmailWorker(strapi);
   },
 };
