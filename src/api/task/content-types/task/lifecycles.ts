@@ -1,13 +1,8 @@
-const formatDate = (value: string) => {
-  if (!value) return "";
-  const deadline = new Date(value);
-
-  return deadline.toLocaleDateString("vi-VN", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-};
+import { QueueManager } from "../../../../queue/QueueManager";
+import {
+  EMAIL_QUEUE,
+  type TaskNotificationJobData,
+} from "../../../../queue/workers/email.worker";
 
 export default {
   async afterCreate(event: any) {
@@ -17,48 +12,28 @@ export default {
       const receivers: any[] = result?.person_charge ?? [];
 
       if (receivers.length === 0) {
-        console.log("[Task Lifecycle] No receivers found for task:", result.id);
+        console.log("[Task Lifecycle] No receivers for task:", result.id);
         return;
       }
 
-      const taskUrl = `${process.env.FRONTEND_URL ?? "http://localhost:3000"}/tasks?taskId=${result.documentId}`;
+      await QueueManager.getInstance()
+        .getQueue<TaskNotificationJobData>(EMAIL_QUEUE)
+        .add("task-assigned", {
+          type: "task-assigned",
+          receivers: receivers.map((user: any) => ({
+            email: user.email,
+            fullName: user.fullName,
+          })),
+          task: {
+            title: result?.title,
+            documentId: result?.documentId,
+            dueDate: result?.dueDate,
+            createdByFullName: result?.created_by_user?.fullName ?? "",
+          },
+        });
 
-      // Gửi email cho từng người được assign
-      await Promise.all(
-        receivers.map((user: any) =>
-          (strapi as any)
-            .plugin("email-designer-5")
-            .service("email")
-            .sendTemplatedEmail(
-              {
-                to: user.email,
-              },
-              {
-                templateReferenceId: 2,
-                subject: "Nhận được nhiệm vụ mới",
-              },
-              {
-                USER: {
-                  fullName: user.fullName,
-                },
-                URL: taskUrl,
-                TASK: {
-                  name: result?.title,
-                  assignedBy: result?.created_by_user?.fullName,
-                  deadline: formatDate(result?.dueDate),
-                },
-              },
-            )
-            .then(() => {
-              console.log(`[Task Lifecycle] Email sent to ${user.email}`);
-            })
-            .catch((err: any) => {
-              console.error(
-                `[Task Lifecycle] Failed to send email to ${user.email}:`,
-                err,
-              );
-            }),
-        ),
+      console.log(
+        `[Task Lifecycle] Queued notification for task ${result.id} → ${receivers.length} receiver(s)`,
       );
     } catch (err) {
       console.error("[Task Lifecycle] afterCreate error:", err);
