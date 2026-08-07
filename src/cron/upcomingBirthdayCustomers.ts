@@ -257,7 +257,7 @@ export default {
     },
 
     options: {
-      rule: "*/3000 * * * * *",
+      rule: "0 0 6 * * *",
     },
   },
 };
