@@ -1,6 +1,7 @@
 import type { Core } from "@strapi/strapi";
 import { DEFAULT_WEBHOOK_PORT } from "../types";
 import { Bot, webhookCallback } from "node-telegram-bot-api";
+import type { Context } from "node-telegram-bot-api";
 import { createServer } from "node:http";
 import type { IncomingHttpHeaders, Server } from "node:http";
 
@@ -76,7 +77,7 @@ export class BotManager {
 
     try {
       this.bot = new Bot(token);
-      this.bot.catch((err, ctx) => {
+      this.bot.catch((err: unknown, ctx: Context) => {
         const reason = err instanceof Error ? err.message : String(err);
         strapi.log.error(
           `[BotManager] Handler error at update ${ctx.update.update_id}: ${reason}`,
@@ -144,7 +145,7 @@ export class BotManager {
               const response = await callback(request);
 
               res.statusCode = response.status;
-              response.headers.forEach((value, key) => {
+              response.headers.forEach((value: string, key: string) => {
                 res.setHeader(key, value);
               });
 

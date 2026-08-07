@@ -1,4 +1,5 @@
 import { Bot } from "node-telegram-bot-api";
+import type { Context } from "node-telegram-bot-api";
 import type {
   CommandHandler,
   MessageHandler,
@@ -16,7 +17,7 @@ export class CommandRegistry {
 
   static register(bot: Bot, command: string, handler: CommandHandler): void {
     const regex = CommandRegistry.normalizeCommand(command);
-    bot.on("message", async (ctx) => {
+    bot.on("message", async (ctx: Context) => {
       const message = ctx.message;
       if (!message?.text) {
         return;
@@ -32,7 +33,7 @@ export class CommandRegistry {
   }
 
   static registerMessageHandler(bot: Bot, handler: MessageHandler): void {
-    bot.on("message", async (ctx) => {
+    bot.on("message", async (ctx: Context) => {
       if (!ctx.message) {
         return;
       }
@@ -44,7 +45,7 @@ export class CommandRegistry {
     bot: Bot,
     handler: CallbackQueryHandler,
   ): void {
-    bot.on("callback_query", async (ctx) => {
+    bot.on("callback_query", async (ctx: Context) => {
       if (!ctx.callbackQuery) {
         return;
       }
