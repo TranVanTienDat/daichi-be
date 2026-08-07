@@ -38,7 +38,10 @@ WORKDIR /opt/app
 COPY . .
 
 # Build plugin tele trước (vì dist/ bị gitignore, server không có sẵn)
-RUN cd src/plugins/tele && yarn install --frozen-lockfile && yarn build && yarn verify
+# Dùng ./node_modules/.bin/strapi-plugin vì binary nằm trong node_modules của plugin
+RUN cd src/plugins/tele \
+    && yarn install --frozen-lockfile \
+    && ./node_modules/.bin/strapi-plugin build
 
 # Sau đó mới build Strapi
 RUN yarn build
