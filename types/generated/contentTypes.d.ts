@@ -1375,6 +1375,7 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.role'
     >;
     tasks: Schema.Attribute.Relation<'manyToMany', 'api::task.task'>;
+    telegramChatId: Schema.Attribute.String;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

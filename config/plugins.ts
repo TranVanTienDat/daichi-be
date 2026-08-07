@@ -78,6 +78,10 @@ const config = ({
       },
     } as EmailConfig,
   },
+  tele: {
+    enabled: true,
+    resolve: "./src/plugins/tele",
+  },
 });
 
 export default config;

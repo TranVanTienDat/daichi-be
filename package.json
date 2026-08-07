@@ -26,6 +26,7 @@
     "fs-extra": "^10.0.0",
     "ioredis": "^6.0.0",
     "mime-types": "^2.1.27",
+    "node-telegram-bot-api": "^1.2.0",
     "pg": "8.20.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -36,8 +37,10 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/node-telegram-bot-api": "^0.64.15",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "fast-check": "^4.9.0",
     "typescript": "^5"
   },
   "engines": {

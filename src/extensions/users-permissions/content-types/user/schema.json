@@ -105,6 +105,10 @@
       "relation": "oneToMany",
       "target": "api::task.task",
       "mappedBy": "created_by_user"
+    },
+    "telegramChatId": {
+      "type": "string",
+      "required": false
     }
   }
 }
