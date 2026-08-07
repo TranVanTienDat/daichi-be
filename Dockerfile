@@ -38,9 +38,9 @@ WORKDIR /opt/app
 COPY . .
 
 # Build plugin tele trước (vì dist/ bị gitignore, server không có sẵn)
-# Dùng ./node_modules/.bin/strapi-plugin vì binary nằm trong node_modules của plugin
+# NODE_ENV=development để yarn cài cả devDependencies (có @strapi/sdk-plugin chứa strapi-plugin binary)
 RUN cd src/plugins/tele \
-    && yarn install --frozen-lockfile \
+    && NODE_ENV=development yarn install --frozen-lockfile \
     && ./node_modules/.bin/strapi-plugin build
 
 # Sau đó mới build Strapi
