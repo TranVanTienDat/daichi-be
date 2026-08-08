@@ -22,12 +22,10 @@
       "required": true
     },
     "contact_address": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "sum_insured": {
-      "type": "decimal",
-      "required": true
+      "type": "float"
     },
     "effective_date": {
       "type": "date",
@@ -49,6 +47,12 @@
         "MONTHLY"
       ]
     },
+    "premium_due_date": {
+      "type": "date"
+    },
+    "fee_collection_status": {
+      "type": "string"
+    },
     "grace_period_end_date": {
       "type": "date"
     },
@@ -59,28 +63,31 @@
       "type": "date"
     },
     "estimated_periodic_premium": {
-      "type": "decimal"
+      "type": "float"
     },
     "periodic_or_base_premium": {
-      "type": "decimal"
+      "type": "float"
     },
     "total_paid_premium": {
-      "type": "decimal"
+      "type": "float"
     },
     "base_premium": {
-      "type": "decimal"
+      "type": "float"
     },
     "topup_premium": {
-      "type": "decimal"
+      "type": "float"
     },
     "advance_premium_next_term": {
-      "type": "decimal"
+      "type": "float"
     },
     "unpaid_past_base_premium": {
-      "type": "decimal"
+      "type": "float"
+    },
+    "apl_loan_and_interest": {
+      "type": "float"
     },
     "pending_suspense_premium": {
-      "type": "decimal"
+      "type": "float"
     },
     "customer": {
       "type": "relation",

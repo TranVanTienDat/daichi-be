@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-08-08T04:05:38.218Z"
+    "x-generation-date": "2026-08-08T11:08:54.653Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -5155,6 +5155,13 @@
                   "MONTHLY"
                 ]
               },
+              "premium_due_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "fee_collection_status": {
+                "type": "string"
+              },
               "grace_period_end_date": {
                 "type": "string",
                 "format": "date"
@@ -5191,6 +5198,10 @@
                 "format": "float"
               },
               "unpaid_past_base_premium": {
+                "type": "number",
+                "format": "float"
+              },
+              "apl_loan_and_interest": {
                 "type": "number",
                 "format": "float"
               },
@@ -7484,6 +7495,13 @@
                     "MONTHLY"
                   ]
                 },
+                "premium_due_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "fee_collection_status": {
+                  "type": "string"
+                },
                 "grace_period_end_date": {
                   "type": "string",
                   "format": "date"
@@ -7520,6 +7538,10 @@
                   "format": "float"
                 },
                 "unpaid_past_base_premium": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "apl_loan_and_interest": {
                   "type": "number",
                   "format": "float"
                 },
@@ -9492,8 +9514,6 @@
             "required": [
               "contract_number",
               "insured_person_name",
-              "contact_address",
-              "sum_insured",
               "effective_date",
               "payment_frequency"
             ],
@@ -9533,6 +9553,13 @@
                   "MONTHLY"
                 ]
               },
+              "premium_due_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "fee_collection_status": {
+                "type": "string"
+              },
               "grace_period_end_date": {
                 "type": "string",
                 "format": "date"
@@ -9569,6 +9596,10 @@
                 "format": "float"
               },
               "unpaid_past_base_premium": {
+                "type": "number",
+                "format": "float"
+              },
+              "apl_loan_and_interest": {
                 "type": "number",
                 "format": "float"
               },
@@ -9697,8 +9728,6 @@
         "required": [
           "contract_number",
           "insured_person_name",
-          "contact_address",
-          "sum_insured",
           "effective_date",
           "payment_frequency"
         ],
@@ -9750,6 +9779,13 @@
               "MONTHLY"
             ]
           },
+          "premium_due_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "fee_collection_status": {
+            "type": "string"
+          },
           "grace_period_end_date": {
             "type": "string",
             "format": "date"
@@ -9786,6 +9822,10 @@
             "format": "float"
           },
           "unpaid_past_base_premium": {
+            "type": "number",
+            "format": "float"
+          },
+          "apl_loan_and_interest": {
             "type": "number",
             "format": "float"
           },
@@ -9946,6 +9986,13 @@
                         "MONTHLY"
                       ]
                     },
+                    "premium_due_date": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "fee_collection_status": {
+                      "type": "string"
+                    },
                     "grace_period_end_date": {
                       "type": "string",
                       "format": "date"
@@ -9982,6 +10029,10 @@
                       "format": "float"
                     },
                     "unpaid_past_base_premium": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "apl_loan_and_interest": {
                       "type": "number",
                       "format": "float"
                     },
@@ -12124,6 +12175,13 @@
                   "MONTHLY"
                 ]
               },
+              "premium_due_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "fee_collection_status": {
+                "type": "string"
+              },
               "grace_period_end_date": {
                 "type": "string",
                 "format": "date"
@@ -12160,6 +12218,10 @@
                 "format": "float"
               },
               "unpaid_past_base_premium": {
+                "type": "number",
+                "format": "float"
+              },
+              "apl_loan_and_interest": {
                 "type": "number",
                 "format": "float"
               },
@@ -15272,6 +15334,13 @@
                           "MONTHLY"
                         ]
                       },
+                      "premium_due_date": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "fee_collection_status": {
+                        "type": "string"
+                      },
                       "grace_period_end_date": {
                         "type": "string",
                         "format": "date"
@@ -15308,6 +15377,10 @@
                         "format": "float"
                       },
                       "unpaid_past_base_premium": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "apl_loan_and_interest": {
                         "type": "number",
                         "format": "float"
                       },

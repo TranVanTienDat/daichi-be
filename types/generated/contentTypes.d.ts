@@ -627,11 +627,12 @@ export interface ApiInsuranceContractInsuranceContract
     draftAndPublish: false;
   };
   attributes: {
-    advance_premium_next_term: Schema.Attribute.Decimal;
+    advance_premium_next_term: Schema.Attribute.Float;
+    apl_loan_and_interest: Schema.Attribute.Float;
     assignment_date: Schema.Attribute.Date;
     assignment_type: Schema.Attribute.String;
-    base_premium: Schema.Attribute.Decimal;
-    contact_address: Schema.Attribute.String & Schema.Attribute.Required;
+    base_premium: Schema.Attribute.Float;
+    contact_address: Schema.Attribute.String;
     contract_number: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
@@ -647,8 +648,9 @@ export interface ApiInsuranceContractInsuranceContract
       Schema.Attribute.Private;
     customer: Schema.Attribute.Relation<'manyToOne', 'api::customer.customer'>;
     effective_date: Schema.Attribute.Date & Schema.Attribute.Required;
-    estimated_periodic_premium: Schema.Attribute.Decimal;
+    estimated_periodic_premium: Schema.Attribute.Float;
     expiration_date: Schema.Attribute.Date;
+    fee_collection_status: Schema.Attribute.String;
     grace_period_end_date: Schema.Attribute.Date;
     insured_person_name: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -662,17 +664,18 @@ export interface ApiInsuranceContractInsuranceContract
       ['ANNUAL', 'SEMI_ANNUAL', 'QUARTERLY', 'MONTHLY']
     > &
       Schema.Attribute.Required;
-    pending_suspense_premium: Schema.Attribute.Decimal;
-    periodic_or_base_premium: Schema.Attribute.Decimal;
+    pending_suspense_premium: Schema.Attribute.Float;
+    periodic_or_base_premium: Schema.Attribute.Float;
     policy_adjustment_requests: Schema.Attribute.Relation<
       'oneToMany',
       'api::policy-adjustment-request.policy-adjustment-request'
     >;
+    premium_due_date: Schema.Attribute.Date;
     publishedAt: Schema.Attribute.DateTime;
-    sum_insured: Schema.Attribute.Decimal & Schema.Attribute.Required;
-    topup_premium: Schema.Attribute.Decimal;
-    total_paid_premium: Schema.Attribute.Decimal;
-    unpaid_past_base_premium: Schema.Attribute.Decimal;
+    sum_insured: Schema.Attribute.Float;
+    topup_premium: Schema.Attribute.Float;
+    total_paid_premium: Schema.Attribute.Float;
+    unpaid_past_base_premium: Schema.Attribute.Float;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
