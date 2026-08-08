@@ -258,6 +258,7 @@ export default {
 
     options: {
       rule: "0 0 6 * * *",
+      tz: "Asia/Ho_Chi_Minh",
     },
   },
 };
