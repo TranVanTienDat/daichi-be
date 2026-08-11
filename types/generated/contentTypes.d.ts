@@ -717,7 +717,7 @@ export interface ApiPolicyAdjustmentRequestPolicyAdjustmentRequest
       'api::policy-adjustment-request.policy-adjustment-request'
     > &
       Schema.Attribute.Private;
-    policyholder_name: Schema.Attribute.String & Schema.Attribute.Required;
+    policyholder_name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     received_date: Schema.Attribute.Date & Schema.Attribute.Required;
     receiving_office: Schema.Attribute.String;
@@ -755,6 +755,10 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
     dueDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    files: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::task.task'> &
       Schema.Attribute.Private;

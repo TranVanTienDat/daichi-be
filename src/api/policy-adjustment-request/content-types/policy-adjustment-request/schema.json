@@ -13,8 +13,7 @@
   "pluginOptions": {},
   "attributes": {
     "policyholder_name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "advisor_info": {
       "type": "text"

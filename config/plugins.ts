@@ -35,6 +35,12 @@ const config = ({
   },
   upload: {
     config: {
+      provider: env("CLOUDINARY_PROVIDER"),
+      providerOptions: {
+        cloud_name: env("CLOUDINARY_NAME"),
+        api_key: env("CLOUDINARY_KEY"),
+        api_secret: env("CLOUDINARY_SECRET"),
+      },
       security: {
         allowedTypes: allowedMediaTypes,
         deniedTypes: deniedExecutableTypes,
