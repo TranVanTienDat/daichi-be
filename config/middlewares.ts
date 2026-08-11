@@ -18,8 +18,28 @@ const config: Core.Config.Middlewares = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          "script-src": ["'self'", "'unsafe-inline'", "editor.unlayer.com"],
+          "script-src": [
+            "'self'",
+            "'unsafe-inline'",
+            "editor.unlayer.com",
+            "res.cloudinary.com",
+          ],
           "frame-src": ["'self'", "editor.unlayer.com"],
+          "connect-src": ["'self'", "https:"],
+          "img-src": [
+            "'self'",
+            "data:",
+            "blob:",
+            "market-assets.strapi.io",
+            "res.cloudinary.com",
+          ],
+          "media-src": [
+            "'self'",
+            "data:",
+            "blob:",
+            "market-assets.strapi.io",
+            "res.cloudinary.com",
+          ],
           upgradeInsecureRequests: null,
         },
       },

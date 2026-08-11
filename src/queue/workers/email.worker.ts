@@ -6,7 +6,7 @@ import { QueueManager } from "../QueueManager";
 export const EMAIL_QUEUE = "email-notifications";
 
 export type TaskNotificationJobData = {
-  type: "task-assigned";
+  type: "task-assigned" | "task-updated";
   receivers: Array<{
     email: string;
     fullName: string;
@@ -36,7 +36,7 @@ export const registerEmailWorker = (strapiInstance: Core.Strapi) => {
     async (job: Job<TaskNotificationJobData>) => {
       const { type, receivers, task } = job.data;
 
-      if (type === "task-assigned") {
+      if (type === "task-assigned" || type === "task-updated") {
         const taskUrl = `${process.env.FRONTEND_URL ?? "http://localhost:3000"}/tasks?taskId=${task.documentId}`;
 
         // ── [EMAIL] Tạm comment lại, dùng Telegram thay thế ──────────────────
@@ -99,11 +99,13 @@ export const registerEmailWorker = (strapiInstance: Core.Strapi) => {
               return;
             }
 
-            const message = `📋 *Nhiệm vụ mới*
+            const headerText = type === "task-assigned" ? "Nhiệm vụ mới" : "Cập nhật nhiệm vụ";
+            
+            const message = `📋 *${headerText}*
 
 Xin chào *${user.fullName}*
 
-Nhiệm vụ mới:
+${headerText}:
 
 *Tên nhiệm vụ:* ${task.title}
 *Người giao:* ${task.createdByFullName}
