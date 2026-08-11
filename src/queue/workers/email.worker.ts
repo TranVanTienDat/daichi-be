@@ -99,13 +99,16 @@ export const registerEmailWorker = (strapiInstance: Core.Strapi) => {
               return;
             }
 
-            const headerText = type === "task-assigned" ? "Nhiệm vụ mới" : "Cập nhật nhiệm vụ";
-            
+            const headerText =
+              type === "task-assigned"
+                ? "1 nhiệm vụ mới đã được tạo"
+                : "1 nhiệm vụ đã được cập nhật";
+
             const message = `📋 *${headerText}*
 
 Xin chào *${user.fullName}*
 
-${headerText}:
+*Nhiệm vụ:* 
 
 *Tên nhiệm vụ:* ${task.title}
 *Người giao:* ${task.createdByFullName}
