@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-08-11T10:06:16.589Z"
+    "x-generation-date": "2026-08-12T10:47:26.793Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -6862,6 +6862,24 @@
                                 }
                               }
                             },
+                            "contract": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
                             "createdAt": {
                               "type": "string",
                               "format": "date-time"
@@ -9669,6 +9687,24 @@
                                         }
                                       }
                                     }
+                                  }
+                                }
+                              },
+                              "contract": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
                                   }
                                 }
                               },
@@ -12848,6 +12884,24 @@
                                   }
                                 }
                               },
+                              "contract": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "oneOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  },
+                                  "documentId": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
                               "createdAt": {
                                 "type": "string",
                                 "format": "date-time"
@@ -15290,6 +15344,24 @@
                                 }
                               }
                             },
+                            "contract": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "documentId": {
+                                  "type": "string"
+                                }
+                              }
+                            },
                             "createdAt": {
                               "type": "string",
                               "format": "date-time"
@@ -16062,8 +16134,6 @@
           "data": {
             "required": [
               "title",
-              "description",
-              "priority",
               "dueDate"
             ],
             "type": "object",
@@ -16138,6 +16208,17 @@
                   "example": "string or id"
                 }
               },
+              "contract": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "example": "string or id"
+              },
               "locale": {
                 "type": "string"
               },
@@ -16198,8 +16279,6 @@
         "type": "object",
         "required": [
           "title",
-          "description",
-          "priority",
           "dueDate"
         ],
         "properties": {
@@ -18498,6 +18577,24 @@
                           }
                         }
                       },
+                      "contract": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "documentId": {
+                            "type": "string"
+                          }
+                        }
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -18865,6 +18962,24 @@
                     }
                   }
                 }
+              }
+            }
+          },
+          "contract": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "documentId": {
+                "type": "string"
               }
             }
           },

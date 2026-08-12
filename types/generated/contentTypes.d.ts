@@ -746,6 +746,10 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    contract: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::insurance-contract.insurance-contract'
+    >;
     created_by_user: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
@@ -753,7 +757,7 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    description: Schema.Attribute.Text;
     dueDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
     files: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
@@ -769,7 +773,6 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     priority: Schema.Attribute.Enumeration<
       ['LOW', 'MEDIUM', 'HIGH', 'URGENT']
     > &
-      Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'MEDIUM'>;
     publishedAt: Schema.Attribute.DateTime;
     secondary_info: Schema.Attribute.Text;
