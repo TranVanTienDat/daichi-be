@@ -804,7 +804,8 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.DefaultTo<'TODO'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
-    type: Schema.Attribute.Enumeration<['reminder', 'fee_reminder']>;
+    type: Schema.Attribute.Enumeration<['reminder', 'fee_reminder']> &
+      Schema.Attribute.DefaultTo<'reminder'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

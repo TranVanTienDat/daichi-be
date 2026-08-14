@@ -84,6 +84,7 @@
     },
     "type": {
       "type": "enumeration",
+      "default": "reminder",
       "enum": [
         "reminder",
         "fee_reminder"
