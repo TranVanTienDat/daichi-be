@@ -1,5 +1,6 @@
 import type { Core } from "@strapi/strapi";
 import { registerEmailWorker } from "./queue/workers/email.worker";
+import { registerSubTaskWorker } from "./queue/workers/subtask.worker";
 import type { IBotService } from "./plugins/tele/server/src/services/telegram";
 
 export default {
@@ -7,6 +8,7 @@ export default {
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     registerEmailWorker(strapi);
+    registerSubTaskWorker(strapi);
     registerTelegramCommands(strapi);
   },
 };

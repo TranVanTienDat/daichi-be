@@ -718,7 +718,7 @@ export interface ApiReminderFeeTaskReminderFeeTask
     singularName: 'reminder-fee-task';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     additional_info: Schema.Attribute.Text;

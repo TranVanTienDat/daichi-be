@@ -174,44 +174,38 @@ export default factories.createCoreController(
       }
 
       const hasSubTasks = Array.isArray(subTasks) && subTasks.length > 0;
-
       const self = this as unknown as CoreController;
 
-      // Wrap everything in a transaction for atomicity
-      const result = await strapi.db.transaction(async () => {
-        // 1. Create the parent task
-        const sanitizedTaskInput = (await self.sanitizeInput(
-          taskData,
-          ctx,
-        )) as Record<string, unknown>;
+      // Create the parent task first
+      const sanitizedTaskInput = (await self.sanitizeInput(
+        taskData,
+        ctx,
+      )) as Record<string, unknown>;
 
-        sanitizedTaskInput.created_by_user = user.id;
+      sanitizedTaskInput.created_by_user = user.id;
 
-        const createdTask = await strapi.documents("api::task.task").create({
-          data: sanitizedTaskInput as any,
-          populate: ["person_charge", "created_by_user"],
-        });
-
-        // 2. Bulk create sub-tasks only if provided
-        const createdSubTasks = hasSubTasks
-          ? await Promise.all(
-              subTasks.map((st) =>
-                strapi
-                  .documents("api::reminder-fee-task.reminder-fee-task")
-                  .create({
-                    data: {
-                      ...st,
-                      task: createdTask.documentId,
-                    } as any,
-                  }),
-              ),
-            )
-          : [];
-
-        return { task: createdTask, subTasks: createdSubTasks };
+      const createdTask = await strapi.documents("api::task.task").create({
+        data: sanitizedTaskInput as any,
+        populate: ["person_charge", "created_by_user"],
       });
 
-      const sanitizedTask = await self.sanitizeOutput(result.task, ctx);
+      // If no subtasks, return immediately
+      if (!hasSubTasks) {
+        const sanitizedTask = await self.sanitizeOutput(createdTask, ctx);
+        return self.transformResponse(sanitizedTask);
+      }
+
+      // Add subtasks to queue for background processing
+      const { queueService } = await import("../../../queue/workers/subtask.worker");
+      const { batchId, jobIds, totalBatches } =
+        await queueService.addSubTasksBatch(
+          createdTask.documentId,
+          subTasks,
+          user.id,
+          10, // Process 10 subtasks per batch
+        );
+
+      const sanitizedTask = await self.sanitizeOutput(createdTask, ctx);
       const taskResponse = self.transformResponse(sanitizedTask) as Record<
         string,
         unknown
@@ -219,8 +213,111 @@ export default factories.createCoreController(
 
       return {
         ...taskResponse,
-        subTasks: result.subTasks,
+        subTasks: {
+          total: subTasks.length,
+          batchId,
+          jobIds,
+          totalBatches,
+          batchSize: 10,
+          status: "queued",
+          message: `Đã thêm ${subTasks.length} sub-tasks vào ${totalBatches} batch để xử lý. Sử dụng batchId để theo dõi tiến trình.`,
+        },
       };
+    },
+
+    // GET /api/sub-tasks/batch/:batchId/status
+    async getBatchStatus(ctx: Context) {
+      const user = ctx.state.user;
+
+      if (!user) {
+        throw new UnauthorizedError(
+          "Bạn cần đăng nhập để thực hiện thao tác này.",
+        );
+      }
+
+      const { batchId } = ctx.params;
+
+      if (!batchId) {
+        return ctx.badRequest("Thiếu batchId.");
+      }
+
+      const { queueService } = await import("../../../queue/workers/subtask.worker");
+      const batchStatus = await queueService.getBatchStatus(batchId);
+
+      return {
+        batchId,
+        batches: {
+          total: batchStatus.total,
+          waiting: batchStatus.waiting,
+          active: batchStatus.active,
+          completed: batchStatus.completed,
+          failed: batchStatus.failed,
+        },
+        subTasks: batchStatus.subTasks,
+        isComplete:
+          batchStatus.completed + batchStatus.failed === batchStatus.total,
+        successRate:
+          batchStatus.subTasks.total > 0
+            ? Math.round(
+                (batchStatus.subTasks.successful / batchStatus.subTasks.total) *
+                  100,
+              )
+            : 0,
+        errors: batchStatus.errors,
+        retryBatches: batchStatus.retryBatches,
+        hasRetries: batchStatus.hasRetries,
+      };
+    },
+
+    // POST /api/sub-tasks/batch/:batchId/retry
+    async retryFailedSubTasks(ctx: Context) {
+      const user = ctx.state.user;
+
+      if (!user) {
+        throw new UnauthorizedError(
+          "Bạn cần đăng nhập để thực hiện thao tác này.",
+        );
+      }
+
+      const { batchId } = ctx.params;
+
+      if (!batchId) {
+        return ctx.badRequest("Thiếu batchId.");
+      }
+
+      const { queueService } = await import("../../../queue/workers/subtask.worker");
+      const retryResult = await queueService.retryFailedSubTasks(batchId);
+
+      if (retryResult.failedCount === 0) {
+        return {
+          message: "Không có subtask nào cần retry.",
+          retryBatchId: null,
+          failedCount: 0,
+        };
+      }
+
+      return {
+        message: `Đã tạo retry batch cho ${retryResult.failedCount} subtasks failed.`,
+        originalBatchId: batchId,
+        retryBatchId: retryResult.retryBatchId,
+        failedCount: retryResult.failedCount,
+      };
+    },
+
+    // GET /api/queue/stats
+    async getQueueStats(ctx: Context) {
+      const user = ctx.state.user;
+
+      if (!user) {
+        throw new UnauthorizedError(
+          "Bạn cần đăng nhập để thực hiện thao tác này.",
+        );
+      }
+
+      const { queueService } = await import("../../../queue/workers/subtask.worker");
+      const queueStats = await queueService.getQueueStats();
+
+      return queueStats;
     },
 
     // PUT /api/tasks/staff/:documentId

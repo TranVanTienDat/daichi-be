@@ -4,6 +4,10 @@ import type { IBotService } from "../../plugins/tele/server/src/services/telegra
 import { QueueManager } from "../QueueManager";
 
 export const EMAIL_QUEUE = "email-notifications";
+export enum TASK_TYPE {
+  FEE_REMINDER = "fee_reminder",
+  REMINDER = "reminder",
+}
 
 export type TaskNotificationJobData = {
   type: "task-assigned" | "task-updated";
@@ -26,6 +30,7 @@ export type TaskNotificationJobData = {
     changes: string[];
     updatedAt: string;
   };
+  taskType: TASK_TYPE;
 };
 
 function escapeMarkdownV2(text: string): string {
@@ -45,38 +50,15 @@ export const registerEmailWorker = (strapiInstance: Core.Strapi) => {
   QueueManager.getInstance().registerWorker<TaskNotificationJobData>(
     EMAIL_QUEUE,
     async (job: Job<TaskNotificationJobData>) => {
-      const { type, receivers, task, updateInfo } = job.data;
-
+      const { type, receivers, task, updateInfo, taskType } = job.data;
+      console.log("type:", taskType);
+      const baseUrl = process.env.FRONTEND_URL ?? "http://localhost:3000";
       if (type === "task-assigned" || type === "task-updated") {
-        const taskUrl = `${process.env.FRONTEND_URL ?? "http://localhost:3000"}/tasks?taskId=${task.documentId}`;
-
-        // ── [EMAIL] Tạm comment lại, dùng Telegram thay thế ──────────────────
-        // await Promise.all(
-        //   receivers.map((user) =>
-        //     (strapiInstance as any)
-        //       .plugin("email-designer-5")
-        //       .service("email")
-        //       .sendTemplatedEmail(
-        //         { to: user.email },
-        //         { templateReferenceId: 1, subject: "Nhận được nhiệm vụ mới" },
-        //         {
-        //           USER: { fullName: user.fullName },
-        //           URL: taskUrl,
-        //           TASK: {
-        //             fullName: task.title, // template dùng [TASK.fullName]
-        //             assignedBy: task.createdByFullName,
-        //             dueDate: formatDate(task.dueDate), // template dùng [TASK.dueDate]
-        //           },
-        //         },
-        //       )
-        //       .then(() => console.log(`[EmailWorker] Sent to ${user.email}`))
-        //       .catch((err: any) => {
-        //         console.error(`[EmailWorker] Failed for ${user.email}:`, err);
-        //         throw err; // re-throw để BullMQ retry
-        //       }),
-        //   ),
-        // );
-        // ─────────────────────────────────────────────────────────────────────
+        const url = `${baseUrl}/tasks?tab=${taskType === TASK_TYPE.FEE_REMINDER ? "fee_reminder" : "general"}`;
+        const taskUrl =
+          taskType === TASK_TYPE.FEE_REMINDER
+            ? `${baseUrl}/tasks/fee_reminder/${task.documentId}/edit`
+            : `${baseUrl}/tasks?taskId=${task.documentId}`;
 
         // ── [TELEGRAM] Gửi thông báo qua Telegram bot ────────────────────────
         const botService = strapiInstance
@@ -89,86 +71,6 @@ export const registerEmailWorker = (strapiInstance: Core.Strapi) => {
           );
           return;
         }
-
-        //         await Promise.all(
-        //           receivers.map(async (user) => {
-        //             // Lookup telegramChatId qua Strapi users-permissions service
-        //             const [dbUser] = await strapiInstance
-        //               .plugin("users-permissions")
-        //               .service("user")
-        //               .fetchAll({
-        //                 filters: { email: user.email },
-        //                 fields: ["telegramChatId"],
-        //               });
-
-        //             const chatId: string | undefined = dbUser?.telegramChatId;
-
-        //             if (!chatId) {
-        //               strapiInstance.log.warn(
-        //                 `[EmailWorker] User "${user.email}" chưa liên kết Telegram, bỏ qua.`,
-        //               );
-        //               return;
-        //             }
-
-        //             let message: string;
-
-        //             if (type === "task-assigned") {
-        //               const headerText = "📋 *1 nhiệm vụ mới đã được tạo*";
-
-        //               message = `${headerText}
-
-        // Xin chào *${user.fullName}*
-
-        // *Nhiệm vụ:*
-
-        // *Tên nhiệm vụ:* ${task.title}
-        // *Người giao:* ${task.createdByFullName}
-        // *Deadline:* ${formatDate(task.dueDate)}`;
-        //             } else {
-        //               // task-updated
-        //               const headerText = "🔄 *1 nhiệm vụ đã được cập nhật*";
-        //               const updatedBy = updateInfo?.updatedBy?.fullName || "Hệ thống";
-        //               const changes =
-        //                 updateInfo?.changes?.join(", ") || "Cập nhật thông tin";
-        //               const updatedTime = updateInfo?.updatedAt
-        //                 ? formatDate(updateInfo.updatedAt)
-        //                 : "Vừa xong";
-
-        //               message = `${headerText}
-
-        // Xin chào *${user.fullName}*
-
-        // *Nhiệm vụ:* ${task.title}
-        // *Người cập nhật:* ${updatedBy}
-        // *Thay đổi:* ${changes}
-        // *Thời gian:* ${updatedTime}
-        // *Deadline:* ${formatDate(task.dueDate)}`;
-        //             }
-
-        //             await botService
-        //               .sendMessage(chatId, message, {
-        //                 parse_mode: "MarkdownV2",
-        //                 reply_markup: {
-        //                   inline_keyboard: [
-        //                     [{ text: "🔗 Xem chi tiết nhiệm vụ", url: taskUrl }],
-        //                   ],
-        //                 },
-        //               })
-        //               .then(() =>
-        //                 strapiInstance.log.info(
-        //                   `[EmailWorker] Đã gửi Telegram cho ${user.email} (chatId=${chatId})`,
-        //                 ),
-        //               )
-        //               .catch((err: unknown) => {
-        //                 strapiInstance.log.error(
-        //                   `[EmailWorker] Gửi Telegram thất bại cho ${user.email}: ${err}`,
-        //                 );
-        //                 throw err; // re-throw để BullMQ retry
-        //               });
-        //           }),
-        //         );
-
-        // ─────────────────────────────────────────────────────────────────────
 
         await Promise.all(
           receivers.map(async (user) => {

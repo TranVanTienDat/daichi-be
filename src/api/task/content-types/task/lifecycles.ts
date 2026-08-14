@@ -1,6 +1,7 @@
 import { QueueManager } from "../../../../queue/QueueManager";
 import {
   EMAIL_QUEUE,
+  TASK_TYPE,
   type TaskNotificationJobData,
 } from "../../../../queue/workers/email.worker";
 
@@ -30,6 +31,7 @@ export default {
             dueDate: result?.dueDate,
             createdByFullName: result?.created_by_user?.fullName ?? "",
           },
+          taskType: result?.type as any,
         });
 
       console.log(
@@ -41,8 +43,6 @@ export default {
   },
 
   async beforeUpdate(event: any) {
-    console.log("event", event);
-
     const { params } = event;
 
     if (params?.where?.id) {
@@ -118,7 +118,6 @@ export default {
       // So sánh trạng thái cũ và mới để tạo chi tiết thay đổi
       const oldTask = event.state?.oldTask;
 
-      console.log("oldTask", oldTask);
       const changes: string[] = [];
 
       const formatDate = (dateStr: string) => {
@@ -211,6 +210,9 @@ export default {
         }
       }
 
+      console.log("type:", fullTask?.type);
+      console.log("compare:", fullTask?.type === TASK_TYPE.FEE_REMINDER);
+
       await QueueManager.getInstance()
         .getQueue<TaskNotificationJobData>(EMAIL_QUEUE)
         .add("task-updated", {
@@ -231,6 +233,7 @@ export default {
             changes: changes.length > 0 ? changes : ["Cập nhật thông tin"],
             updatedAt: new Date().toISOString(),
           },
+          taskType: fullTask?.type as any,
         });
 
       console.log(

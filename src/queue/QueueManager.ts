@@ -1,7 +1,7 @@
 import { Queue, Worker, type Job, type ConnectionOptions } from "bullmq";
 import Redis from "ioredis";
 
-type JobProcessor<T> = (job: Job<T>) => Promise<void>;
+type JobProcessor<T> = (job: Job<T>) => Promise<any>;
 
 /**
  * QueueManager — Singleton quản lý toàn bộ Queue và Worker
