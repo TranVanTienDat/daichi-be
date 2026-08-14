@@ -71,6 +71,15 @@
       "relation": "manyToOne",
       "target": "api::insurance-contract.insurance-contract",
       "inversedBy": "contract_riders"
+    },
+    "type": {
+      "type": "enumeration",
+      "required": false,
+      "default": "common",
+      "enum": [
+        "common",
+        "reminderFee"
+      ]
     }
   }
 }

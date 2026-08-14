@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reminder_fee_tasks",
+  "info": {
+    "singularName": "reminder-fee-task",
+    "pluralName": "reminder-fee-tasks",
+    "displayName": "subTask"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "contract": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::insurance-contract.insurance-contract"
+    },
+    "status_reminder": {
+      "type": "enumeration",
+      "required": true,
+      "default": "not_reminded",
+      "enum": [
+        "not_reminded",
+        "reminded",
+        "paid",
+        "unresolved"
+      ]
+    },
+    "task": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::task.task",
+      "inversedBy": "sub_tasks"
+    },
+    "evidence": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "additional_info": {
+      "type": "text"
+    }
+  }
+}

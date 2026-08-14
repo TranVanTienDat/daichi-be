@@ -441,33 +441,6 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiAboutAbout extends Struct.SingleTypeSchema {
-  collectionName: 'abouts';
-  info: {
-    description: 'Write about yourself and the content you create';
-    displayName: 'About';
-    pluralName: 'abouts';
-    singularName: 'about';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    blocks: Schema.Attribute.DynamicZone<['shared.media']>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::about.about'> &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiContractRiderContractRider
   extends Struct.CollectionTypeSchema {
   collectionName: 'contract_riders';
@@ -513,6 +486,8 @@ export interface ApiContractRiderContractRider
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'ACTIVE'>;
     sum_insured: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    type: Schema.Attribute.Enumeration<['common', 'reminderFee']> &
+      Schema.Attribute.DefaultTo<'common'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -734,6 +709,50 @@ export interface ApiPolicyAdjustmentRequestPolicyAdjustmentRequest
   };
 }
 
+export interface ApiReminderFeeTaskReminderFeeTask
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'reminder_fee_tasks';
+  info: {
+    displayName: 'subTask';
+    pluralName: 'reminder-fee-tasks';
+    singularName: 'reminder-fee-task';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    additional_info: Schema.Attribute.Text;
+    contract: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::insurance-contract.insurance-contract'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    evidence: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::reminder-fee-task.reminder-fee-task'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    status_reminder: Schema.Attribute.Enumeration<
+      ['not_reminded', 'reminded', 'paid', 'unresolved']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'not_reminded'>;
+    task: Schema.Attribute.Relation<'manyToOne', 'api::task.task'>;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTaskTask extends Struct.CollectionTypeSchema {
   collectionName: 'tasks';
   info: {
@@ -776,6 +795,10 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<'MEDIUM'>;
     publishedAt: Schema.Attribute.DateTime;
     secondary_info: Schema.Attribute.Text;
+    sub_tasks: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::reminder-fee-task.reminder-fee-task'
+    >;
     task_status: Schema.Attribute.Enumeration<
       ['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE']
     > &
@@ -1410,11 +1433,11 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::about.about': ApiAboutAbout;
       'api::contract-rider.contract-rider': ApiContractRiderContractRider;
       'api::customer.customer': ApiCustomerCustomer;
       'api::insurance-contract.insurance-contract': ApiInsuranceContractInsuranceContract;
       'api::policy-adjustment-request.policy-adjustment-request': ApiPolicyAdjustmentRequestPolicyAdjustmentRequest;
+      'api::reminder-fee-task.reminder-fee-task': ApiReminderFeeTaskReminderFeeTask;
       'api::task.task': ApiTaskTask;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
