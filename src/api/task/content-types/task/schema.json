@@ -81,6 +81,13 @@
       "relation": "oneToMany",
       "target": "api::reminder-fee-task.reminder-fee-task",
       "mappedBy": "task"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "reminder",
+        "fee_reminder"
+      ]
     }
   }
 }

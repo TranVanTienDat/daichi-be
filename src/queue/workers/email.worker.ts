@@ -17,7 +17,20 @@ export type TaskNotificationJobData = {
     dueDate: string;
     createdByFullName: string;
   };
+  updateInfo?: {
+    updatedBy: {
+      id?: string | number;
+      fullName: string;
+      email?: string;
+    };
+    changes: string[];
+    updatedAt: string;
+  };
 };
+
+function escapeMarkdownV2(text: string): string {
+  return text.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, "\\$&");
+}
 
 const formatDate = (value: string) => {
   if (!value) return "";
@@ -28,13 +41,11 @@ const formatDate = (value: string) => {
   });
 };
 
-// Nhận strapiInstance từ bootstrap() để tránh "strapi is not defined"
-// vì BullMQ worker không có access vào global strapi
 export const registerEmailWorker = (strapiInstance: Core.Strapi) => {
   QueueManager.getInstance().registerWorker<TaskNotificationJobData>(
     EMAIL_QUEUE,
     async (job: Job<TaskNotificationJobData>) => {
-      const { type, receivers, task } = job.data;
+      const { type, receivers, task, updateInfo } = job.data;
 
       if (type === "task-assigned" || type === "task-updated") {
         const taskUrl = `${process.env.FRONTEND_URL ?? "http://localhost:3000"}/tasks?taskId=${task.documentId}`;
@@ -79,6 +90,86 @@ export const registerEmailWorker = (strapiInstance: Core.Strapi) => {
           return;
         }
 
+        //         await Promise.all(
+        //           receivers.map(async (user) => {
+        //             // Lookup telegramChatId qua Strapi users-permissions service
+        //             const [dbUser] = await strapiInstance
+        //               .plugin("users-permissions")
+        //               .service("user")
+        //               .fetchAll({
+        //                 filters: { email: user.email },
+        //                 fields: ["telegramChatId"],
+        //               });
+
+        //             const chatId: string | undefined = dbUser?.telegramChatId;
+
+        //             if (!chatId) {
+        //               strapiInstance.log.warn(
+        //                 `[EmailWorker] User "${user.email}" chưa liên kết Telegram, bỏ qua.`,
+        //               );
+        //               return;
+        //             }
+
+        //             let message: string;
+
+        //             if (type === "task-assigned") {
+        //               const headerText = "📋 *1 nhiệm vụ mới đã được tạo*";
+
+        //               message = `${headerText}
+
+        // Xin chào *${user.fullName}*
+
+        // *Nhiệm vụ:*
+
+        // *Tên nhiệm vụ:* ${task.title}
+        // *Người giao:* ${task.createdByFullName}
+        // *Deadline:* ${formatDate(task.dueDate)}`;
+        //             } else {
+        //               // task-updated
+        //               const headerText = "🔄 *1 nhiệm vụ đã được cập nhật*";
+        //               const updatedBy = updateInfo?.updatedBy?.fullName || "Hệ thống";
+        //               const changes =
+        //                 updateInfo?.changes?.join(", ") || "Cập nhật thông tin";
+        //               const updatedTime = updateInfo?.updatedAt
+        //                 ? formatDate(updateInfo.updatedAt)
+        //                 : "Vừa xong";
+
+        //               message = `${headerText}
+
+        // Xin chào *${user.fullName}*
+
+        // *Nhiệm vụ:* ${task.title}
+        // *Người cập nhật:* ${updatedBy}
+        // *Thay đổi:* ${changes}
+        // *Thời gian:* ${updatedTime}
+        // *Deadline:* ${formatDate(task.dueDate)}`;
+        //             }
+
+        //             await botService
+        //               .sendMessage(chatId, message, {
+        //                 parse_mode: "MarkdownV2",
+        //                 reply_markup: {
+        //                   inline_keyboard: [
+        //                     [{ text: "🔗 Xem chi tiết nhiệm vụ", url: taskUrl }],
+        //                   ],
+        //                 },
+        //               })
+        //               .then(() =>
+        //                 strapiInstance.log.info(
+        //                   `[EmailWorker] Đã gửi Telegram cho ${user.email} (chatId=${chatId})`,
+        //                 ),
+        //               )
+        //               .catch((err: unknown) => {
+        //                 strapiInstance.log.error(
+        //                   `[EmailWorker] Gửi Telegram thất bại cho ${user.email}: ${err}`,
+        //                 );
+        //                 throw err; // re-throw để BullMQ retry
+        //               });
+        //           }),
+        //         );
+
+        // ─────────────────────────────────────────────────────────────────────
+
         await Promise.all(
           receivers.map(async (user) => {
             // Lookup telegramChatId qua Strapi users-permissions service
@@ -99,20 +190,57 @@ export const registerEmailWorker = (strapiInstance: Core.Strapi) => {
               return;
             }
 
-            const headerText =
-              type === "task-assigned"
-                ? "1 nhiệm vụ mới đã được tạo"
-                : "1 nhiệm vụ đã được cập nhật";
+            // Escape tất cả biến động trước khi ghép vào message
+            const fullName = escapeMarkdownV2(user.fullName);
+            const taskTitle = escapeMarkdownV2(task.title);
+            const dueDate = escapeMarkdownV2(formatDate(task.dueDate));
 
-            const message = `📋 *${headerText}*
+            let message: string;
 
-Xin chào *${user.fullName}*
+            if (type === "task-assigned") {
+              const createdBy = escapeMarkdownV2(task.createdByFullName);
 
-*Nhiệm vụ:* 
+              message = [
+                "📋 *1 nhiệm vụ mới đã được tạo*",
+                "",
+                `Xin chào *${fullName}*`,
+                "",
+                `*Tên nhiệm vụ:* ${taskTitle}`,
+                `*Người giao:* ${createdBy}`,
+                `*Deadline:* ${dueDate}`,
+              ].join("\n");
+            } else {
+              // task-updated
+              const updatedBy = escapeMarkdownV2(
+                updateInfo?.updatedBy?.fullName || "Hệ thống",
+              );
+              const updatedTime = escapeMarkdownV2(
+                updateInfo?.updatedAt
+                  ? formatDate(updateInfo.updatedAt)
+                  : "Vừa xong",
+              );
 
-*Tên nhiệm vụ:* ${task.title}
-*Người giao:* ${task.createdByFullName}
-*Deadline:* ${formatDate(task.dueDate)}`;
+              // Format từng thay đổi trên một dòng
+              const changesList = updateInfo?.changes || ["Cập nhật thông tin"];
+              const formattedChanges = changesList
+                .map((change) => `• ${escapeMarkdownV2(change)}`)
+                .join("\n");
+
+              message = [
+                "🔄 *1 nhiệm vụ đã được cập nhật*",
+                "",
+                `Xin chào *${fullName}*`,
+                "",
+                `*Nhiệm vụ:* ${taskTitle}`,
+                `*Người cập nhật:* ${updatedBy}`,
+                `*Thời gian:* ${updatedTime}`,
+                "",
+                "*Các thay đổi:*",
+                formattedChanges,
+                "",
+                `*Deadline:* ${dueDate}`,
+              ].join("\n");
+            }
 
             await botService
               .sendMessage(chatId, message, {
@@ -136,7 +264,6 @@ Xin chào *${user.fullName}*
               });
           }),
         );
-        // ─────────────────────────────────────────────────────────────────────
       }
     },
   );

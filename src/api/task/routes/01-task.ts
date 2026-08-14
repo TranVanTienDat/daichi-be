@@ -19,6 +19,14 @@ const config: Core.RouterConfig = {
         middlewares: [],
       },
     },
+    {
+      method: "POST",
+      path: "/sub-tasks/bulk",
+      handler: "api::task.task.bulkCreateWithSubTasks",
+      config: {
+        middlewares: [],
+      },
+    },
   ],
 };
 
