@@ -15,6 +15,11 @@ export default {
       handler: "task.getByStaff",
     },
     {
+      method: "GET",
+      path: "/tasks/staff/export-month",
+      handler: "task.exportTasksByMonth",
+    },
+    {
       method: "PUT",
       path: "/tasks/staff/:documentId",
       handler: "task.updateByStaff",

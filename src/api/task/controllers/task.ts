@@ -149,6 +149,212 @@ export default factories.createCoreController(
       });
     },
 
+    // GET /api/tasks/staff/export-month
+    async exportTasksByMonth(ctx: Context) {
+      const user = ctx.state.user;
+
+      if (!user) {
+        throw new UnauthorizedError(
+          "Bạn cần đăng nhập để thực hiện thao tác này.",
+        );
+      }
+
+      const fullUser = await strapi
+        .documents("plugin::users-permissions.user")
+        .findOne({
+          documentId: user.documentId,
+          populate: ["role"],
+        });
+
+      const roleName = fullUser?.role?.name?.toLowerCase() || "";
+      const roleType = fullUser?.role?.type?.toLowerCase() || "";
+      const isAdmin = roleName.includes("admin") || roleType === "admin";
+
+      const staffCondition = {
+        person_charge: { id: { $eq: user.id } },
+      };
+
+      const queryType = (ctx.query.type as string) || "";
+
+      const now = new Date();
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const endOfMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() + 1,
+        0,
+        23,
+        59,
+        59,
+      );
+
+      const baseFilters = {
+        createdAt: {
+          $gte: startOfMonth.toISOString(),
+          $lte: endOfMonth.toISOString(),
+        },
+      };
+
+      const isExportAll = isAdmin && queryType === "all";
+
+      const filters = isExportAll
+        ? baseFilters
+        : { $and: [staffCondition, baseFilters] };
+
+      const tasks = await strapi.documents("api::task.task").findMany({
+        filters,
+        populate: ["person_charge", "created_by_user"],
+      });
+
+      const ExcelJS = await import("exceljs");
+
+      const STATUS_LABELS: Record<string, string> = {
+        TODO: "Chưa làm",
+        IN_PROGRESS: "Đang thực hiện",
+        REVIEW: "Đang review",
+        DONE: "Hoàn thành",
+      };
+
+      const PRIORITY_LABELS: Record<string, string> = {
+        LOW: "Thấp",
+        MEDIUM: "Trung bình",
+        HIGH: "Cao",
+        URGENT: "Khẩn cấp",
+      };
+
+      const STATUS_COLORS: Record<string, string> = {
+        TODO: "FFF2CC",
+        IN_PROGRESS: "CFE2FF",
+        REVIEW: "EAD1DC",
+        DONE: "D9EAD3",
+      };
+
+      const PRIORITY_COLORS: Record<string, string> = {
+        LOW: "F3F3F3",
+        MEDIUM: "FFF2CC",
+        HIGH: "F4CCCC",
+        URGENT: "B90000",
+      };
+
+      const statusLabel = (raw: string) => STATUS_LABELS[raw] || raw;
+      const priorityLabel = (raw: string) => PRIORITY_LABELS[raw] || raw;
+      const statusColor = (raw: string) => STATUS_COLORS[raw] || "FFFFFF";
+      const priorityColor = (raw: string) => PRIORITY_COLORS[raw] || "FFFFFF";
+
+      const argb = (hex: string) => `FF${hex}`;
+
+      const thinBorder = {
+        top: { style: "thin" as const, color: { argb: "FFBFBFBF" } },
+        bottom: { style: "thin" as const, color: { argb: "FFBFBFBF" } },
+        left: { style: "thin" as const, color: { argb: "FFBFBFBF" } },
+        right: { style: "thin" as const, color: { argb: "FFBFBFBF" } },
+      };
+
+      const headers = [
+        "STT",
+        "Tiêu đề",
+        "Mô tả",
+        "Độ ưu tiên",
+        "Trạng thái",
+        "Người phụ trách",
+        "Người tạo",
+        "Hạn hoàn thành",
+        "Ngày tạo",
+      ];
+
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet("Tasks");
+
+      const headerRow = worksheet.addRow(headers);
+      headerRow.eachCell((cell) => {
+        cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF4F81BD" } };
+        cell.font = { bold: true, color: { argb: "FFFFFFFF" } };
+        cell.alignment = { vertical: "middle", horizontal: "center" };
+        cell.border = thinBorder;
+      });
+
+      for (let r = 0; r < tasks.length; r++) {
+        const task: any = tasks[r];
+        const statusRaw = task.task_status || "";
+        const priorityRaw = task.priority || "";
+        const row = worksheet.addRow([
+          r + 1,
+          task.title || "",
+          task.description || "",
+          priorityLabel(priorityRaw),
+          statusLabel(statusRaw),
+          (task.person_charge || [])
+            .map((u: any) => u.fullName || u.username || "")
+            .filter(Boolean)
+            .join(", "),
+          task.created_by_user?.fullName || task.created_by_user?.username || "",
+          task.dueDate
+            ? new Date(task.dueDate).toLocaleDateString("vi-VN", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })
+            : "",
+          task.createdAt
+            ? new Date(task.createdAt).toLocaleDateString("vi-VN", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "",
+        ]);
+
+        row.eachCell((cell, colNumber) => {
+          cell.border = thinBorder;
+          cell.alignment = { vertical: "middle", wrapText: true };
+        });
+
+        const priorityCell = row.getCell(4);
+        priorityCell.fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: argb(priorityColor(priorityRaw)) },
+        };
+        if (priorityRaw === "URGENT") {
+          priorityCell.font = { color: { argb: "FFFFFFFF" } };
+        }
+
+        const statusCell = row.getCell(5);
+        statusCell.fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: argb(statusColor(statusRaw)) },
+        };
+        if (statusRaw === "URGENT" || statusRaw === "HIGH") {
+          statusCell.font = { color: { argb: "FFFFFFFF" } };
+        }
+      }
+
+      worksheet.getColumn(1).width = 6;
+      worksheet.getColumn(2).width = 30;
+      worksheet.getColumn(3).width = 40;
+      worksheet.getColumn(4).width = 14;
+      worksheet.getColumn(5).width = 16;
+      worksheet.getColumn(6).width = 24;
+      worksheet.getColumn(7).width = 18;
+      worksheet.getColumn(8).width = 18;
+      worksheet.getColumn(9).width = 20;
+
+      const buffer = Buffer.from(await workbook.xlsx.writeBuffer());
+
+      const monthLabel = `${String(now.getMonth() + 1).padStart(2, "0")}_${now.getFullYear()}`;
+
+      ctx.set({
+        "Content-Type":
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "Content-Disposition": `attachment; filename="tasks-thang-${monthLabel}.xlsx"`,
+        "Content-Length": String(buffer.length),
+      });
+
+      ctx.body = buffer;
+    },
+
     // POST /api/sub-tasks/bulk
     async bulkCreateWithSubTasks(ctx: Context) {
       const user = ctx.state.user;

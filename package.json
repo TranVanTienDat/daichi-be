@@ -24,6 +24,7 @@
     "@strapi/provider-upload-cloudinary": "^5.51.2",
     "@strapi/strapi": "5.50.2",
     "bullmq": "^6.0.8",
+    "exceljs": "^4.4.0",
     "fs-extra": "^10.0.0",
     "ioredis": "^6.0.0",
     "mime-types": "^2.1.27",
