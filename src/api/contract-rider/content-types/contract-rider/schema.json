@@ -41,10 +41,14 @@
     },
     "sum_insured": {
       "type": "decimal",
+      "precision": 20,
+      "scale": 2,
       "required": true
     },
     "periodic_premium": {
       "type": "decimal",
+      "precision": 20,
+      "scale": 2,
       "required": true
     },
     "effective_date": {
