@@ -28,6 +28,15 @@ const config: Core.RouterConfig = {
         middlewares: [],
       },
     },
+    {
+      method: "GET",
+      path: "/insurance-contracts/upcoming-fee",
+      handler:
+        "api::insurance-contract.insurance-contract.getUpcomingFeeContracts",
+      config: {
+        middlewares: [],
+      },
+    },
   ],
 };
 

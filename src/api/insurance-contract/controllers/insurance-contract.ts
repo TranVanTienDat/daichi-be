@@ -162,5 +162,93 @@ export default factories.createCoreController(
         },
       });
     },
+
+    // GET /api/insurance-contracts/upcoming-fee
+    async getUpcomingFeeContracts(ctx: Context) {
+      const user = ctx.state.user;
+      if (!user) {
+        throw new UnauthorizedError(
+          "Bạn cần đăng nhập để thực hiện thao tác này.",
+        );
+      }
+
+      const self = this as unknown as CoreController;
+      await self.validateQuery(ctx);
+      const sanitizedQuery = await self.sanitizeQuery(ctx);
+
+      const { pagination, sort, populate, fields } = sanitizedQuery;
+
+      const page = Math.max(1, pagination?.page ?? 1);
+      const pageSize = Math.min(100, Math.max(1, pagination?.pageSize ?? 25));
+      const start = (page - 1) * pageSize;
+
+      const today = new Date();
+      const startDate = new Date(today);
+      startDate.setDate(startDate.getDate() - 60);
+      const endDate = new Date(today);
+      endDate.setMonth(endDate.getMonth() + 1);
+
+      const contracts = (await strapi
+        .documents("api::insurance-contract.insurance-contract")
+        .findMany({
+          filters: {
+            $and: [
+              { user: { id: { $eq: user.id } } },
+              { ContractStatus: { $eq: "ACTIVE" } },
+              { effective_date: { $notNull: true } },
+              { payment_frequency: { $notNull: true } },
+              ...(sanitizedQuery.filters ? [sanitizedQuery.filters] : []),
+            ],
+          },
+          populate,
+          sort,
+          fields,
+        })) as any[];
+
+      const filtered = contracts.filter((contract) => {
+        const effectiveDate = new Date(contract.effective_date as string);
+        const frequency = contract.payment_frequency as string;
+
+        const monthsPerPeriod =
+          frequency === "ANNUAL"
+            ? 12
+            : frequency === "SEMI_ANNUAL"
+              ? 6
+              : frequency === "QUARTERLY"
+                ? 3
+                : frequency === "MONTHLY"
+                  ? 1
+                  : null;
+
+        if (!monthsPerPeriod) return false;
+
+        const monthsPassed =
+          (today.getFullYear() - effectiveDate.getFullYear()) * 12 +
+          (today.getMonth() - effectiveDate.getMonth());
+
+        const periodsPassed = Math.floor(monthsPassed / monthsPerPeriod);
+
+        const premiumDueDate = new Date(effectiveDate);
+        premiumDueDate.setMonth(
+          premiumDueDate.getMonth() + periodsPassed * monthsPerPeriod,
+        );
+
+        return premiumDueDate >= startDate && premiumDueDate <= endDate;
+      });
+
+      const total = filtered.length;
+      const paginated = filtered.slice(start, start + pageSize);
+
+      const sanitizedContracts = await self.sanitizeOutput(paginated, ctx);
+
+      return self.transformResponse(sanitizedContracts, {
+        pagination: {
+          page,
+          pageSize,
+          pageCount: Math.ceil(total / pageSize),
+          total,
+        },
+      });
+    },
   }),
 );
