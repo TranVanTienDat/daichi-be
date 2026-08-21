@@ -116,7 +116,8 @@ async function importCustomers() {
       "data",
       "uploads",
       "files",
-      "customer_data.xlsx",
+      "products",
+      "Danh_sach_khach_hang_pro.xlsx",
     );
 
   console.log(`📂 Reading Excel: ${excelPath}`);
