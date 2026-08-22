@@ -212,10 +212,10 @@ export default factories.createCoreController(
           fields,
         })) as any[];
 
-      const filtered = contracts.filter((contract) => {
-        const effectiveDate = new Date(contract.effective_date as string);
-        const frequency = contract.payment_frequency as string;
-
+      const computePremiumDueDate = (
+        effectiveDate: Date,
+        frequency: string,
+      ): Date | null => {
         const monthsPerPeriod =
           frequency === "ANNUAL"
             ? 12
@@ -227,7 +227,7 @@ export default factories.createCoreController(
                   ? 1
                   : null;
 
-        if (!monthsPerPeriod) return false;
+        if (!monthsPerPeriod) return null;
 
         const monthsPassed =
           (today.getFullYear() - effectiveDate.getFullYear()) * 12 +
@@ -240,11 +240,76 @@ export default factories.createCoreController(
           premiumDueDate.getMonth() + periodsPassed * monthsPerPeriod,
         );
 
+        return premiumDueDate;
+      };
+
+      const contractsWithDates = contracts
+        .map((contract) => {
+          const effectiveDate = new Date(contract.effective_date as string);
+          const premiumDueDate = computePremiumDueDate(
+            effectiveDate,
+            contract.payment_frequency as string,
+          );
+
+          if (!premiumDueDate) return null;
+
+          return { contract, premiumDueDate };
+        })
+        .filter(Boolean) as { contract: any; premiumDueDate: Date }[];
+
+      const filtered = contractsWithDates.filter(({ premiumDueDate }) => {
         return premiumDueDate >= startDate && premiumDueDate <= endDate;
       });
 
-      const total = filtered.length;
-      const paginated = filtered.slice(start, start + pageSize);
+      const frequencyLabelMap: Record<string, string> = {
+        ANNUAL: "Năm",
+        SEMI_ANNUAL: "Nửa năm",
+        QUARTERLY: "Quý",
+        MONTHLY: "Tháng",
+      };
+
+      const formatDate = (value: string | null | undefined): string => {
+        if (!value) return "";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return value || "";
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+      };
+
+      const computeStatus = (premiumDueDateStr: string): string => {
+        if (!premiumDueDateStr) return "";
+        const dueDate = new Date(premiumDueDateStr);
+        const todayStart = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate(),
+        );
+        const dueStart = new Date(
+          dueDate.getFullYear(),
+          dueDate.getMonth(),
+          dueDate.getDate(),
+        );
+
+        if (dueStart > todayStart) return "Sắp đến hạn thu phí";
+        if (dueStart.getTime() === todayStart.getTime())
+          return "Đến hạn thu phí";
+        return "Quá hạn thu phí";
+      };
+
+      const enriched = filtered.map(({ contract, premiumDueDate }) => {
+        const premiumDueDateStr = premiumDueDate.toISOString().slice(0, 10);
+
+        return {
+          ...contract,
+          fee_collection_status: computeStatus(premiumDueDateStr),
+          premium_due_date: formatDate(premiumDueDateStr),
+        };
+      });
+
+      const total = enriched.length;
+      const paginated = enriched.slice(start, start + pageSize);
 
       const sanitizedContracts = await self.sanitizeOutput(paginated, ctx);
 
@@ -272,9 +337,9 @@ export default factories.createCoreController(
 
       if (!startParam || !endParam) {
         ctx.status = 400;
-        return ctx.body = {
+        return (ctx.body = {
           error: "Thiếu tham số feeStart hoặc feeEnd. Định dạng: DD-MM-YYYY",
-        };
+        });
       }
 
       const parseDate = (value: string): Date => {
@@ -395,11 +460,20 @@ export default factories.createCoreController(
       const computeStatus = (premiumDueDateStr: string): string => {
         if (!premiumDueDateStr) return "";
         const dueDate = new Date(premiumDueDateStr);
-        const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-        const dueStart = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
+        const todayStart = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate(),
+        );
+        const dueStart = new Date(
+          dueDate.getFullYear(),
+          dueDate.getMonth(),
+          dueDate.getDate(),
+        );
 
         if (dueStart > todayStart) return "Sắp đến hạn thu phí";
-        if (dueStart.getTime() === todayStart.getTime()) return "Đến hạn thu phí";
+        if (dueStart.getTime() === todayStart.getTime())
+          return "Đến hạn thu phí";
         return "Quá hạn thu phí";
       };
 
@@ -447,7 +521,11 @@ export default factories.createCoreController(
           key: "phi_dinh_ky_co_ban_dinh_ky",
           width: 24,
         },
-        { header: "SĐT khách hàng", key: "so_dien_thoai_khach_hang", width: 18 },
+        {
+          header: "SĐT khách hàng",
+          key: "so_dien_thoai_khach_hang",
+          width: 18,
+        },
       ];
 
       formatted.forEach((row) => {
